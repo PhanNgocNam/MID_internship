@@ -1,18 +1,20 @@
-import React from "react";
-import { HomeOutlined } from "@ant-design/icons";
-
-// type listItem = {
-//   icon: React.ReactElement;
-// }[];
+import {
+  HomeOutlined,
+  CompassOutlined,
+  PlaySquareOutlined,
+} from "@ant-design/icons";
 
 export const data = [
   {
-    icon: "s",
+    icon: HomeOutlined,
+    path: "/",
   },
   {
-    icon: "<CompassOutlined />",
+    icon: CompassOutlined,
+    path: "/explore",
   },
   {
-    icon: "<PlaySquareOutlined />",
+    icon: PlaySquareOutlined,
+    path: "/upgrade",
   },
 ];
