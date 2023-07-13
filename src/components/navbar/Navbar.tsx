@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import logo_on_phone from "../../assets/img/logo-on-phone.svg";
 import UserAvatar from "../avatar/UserAvatar";
 import Logo from "../logo/Logo";
@@ -8,10 +8,12 @@ import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { Button } from "antd";
 import { signInWithGoogle } from "../../configs/firebase";
-import { loginService } from "../../services/login/loginService";
+import { IUser, loginService } from "../../services/login/loginService";
 import { login } from "../../features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../configs/store";
+import LogoutPopup from "./LogoutPopup";
+import LangsComboBox from "./LangsComboBox";
 
 interface INavbar {
   isChangeBackgroundHeader: boolean;
@@ -20,8 +22,17 @@ interface INavbar {
 const Navbar: FC<INavbar> = ({ isChangeBackgroundHeader }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [isLogout, setIsLogout] = useState<boolean>(false);
 
-  const { status, photoURL } = useSelector((state: RootState) => state.user);
+  const { status } = useSelector((state: RootState) => state.user);
+  useEffect(() => {
+    if (!status) {
+      const user: string = localStorage.getItem("user")!;
+      if (user) {
+        dispatch(login(JSON.parse(user)));
+      }
+    }
+  }, []);
 
   return (
     <div
@@ -39,6 +50,7 @@ const Navbar: FC<INavbar> = ({ isChangeBackgroundHeader }) => {
             {data.map((menuItem, index) => {
               return (
                 <menuItem.icon
+                  className="text-xl text-white/80"
                   key={index}
                   onClick={() => navigate(menuItem.path)}
                 />
@@ -46,7 +58,13 @@ const Navbar: FC<INavbar> = ({ isChangeBackgroundHeader }) => {
             })}
             <SearchBox />
           </div>
-          <UserAvatar size={28} src={`${photoURL}`} alt="Avatar..." />
+          <LangsComboBox />
+          <UserAvatar
+            onClick={() => setIsLogout(!isLogout)}
+            size={28}
+            alt="Avatar..."
+          />
+          {isLogout ? <LogoutPopup /> : ""}
         </>
       ) : (
         <Button

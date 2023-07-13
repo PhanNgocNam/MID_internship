@@ -1,14 +1,25 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { Avatar } from "antd";
+import { useSelector } from "react-redux";
+import { RootState } from "../../configs/store";
 
 interface UserAvatarProps {
   alt: string;
-  src: string;
   size: number;
+  onClick?: () => void;
 }
 
-const UserAvatar: FC<UserAvatarProps> = ({ alt, src, size }) => {
-  return <Avatar alt={alt} src={src} size={size} shape="circle" />;
+const UserAvatar: FC<UserAvatarProps> = ({ alt, size, onClick }) => {
+  const { photoURL } = useSelector((state: RootState) => state.user);
+  return (
+    <Avatar
+      onClick={onClick}
+      alt={alt}
+      src={photoURL}
+      size={size}
+      shape="circle"
+    />
+  );
 };
 
 export default UserAvatar;

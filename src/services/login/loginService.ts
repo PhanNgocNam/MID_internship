@@ -10,5 +10,7 @@ type callbackAuthGG = () => Promise<IUser>;
 
 export const loginService = async (signInWithGoogle: callbackAuthGG) => {
   const res = await signInWithGoogle();
+  if (!res) return;
+  localStorage.setItem("user", JSON.stringify(res));
   return res;
 };

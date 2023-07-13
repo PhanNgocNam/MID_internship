@@ -5,24 +5,26 @@ import DefaultLayout from "./layouts/DefaultLayout";
 
 const App: FC = () => {
   return (
-    <Router>
-      <Routes>
-        {routes.map((pageItem, index) => {
-          const { path } = pageItem;
-          return (
-            <Route
-              key={index}
-              path={path}
-              element={
-                <DefaultLayout>
-                  <pageItem.page />
-                </DefaultLayout>
-              }
-            />
-          );
-        })}
-      </Routes>
-    </Router>
+    <>
+      <Router>
+        <Routes>
+          {routes.map((pageItem, index) => {
+            const { path } = pageItem;
+            return (
+              <Route
+                key={index}
+                path={path}
+                element={
+                  <DefaultLayout>
+                    <pageItem.page />
+                  </DefaultLayout>
+                }
+              />
+            );
+          })}
+        </Routes>
+      </Router>
+    </>
   );
 };
 

@@ -26,8 +26,16 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.status = action.payload.status;
     },
+
+    logout: (state) => {
+      state.uid = "";
+      state.displayName = "";
+      state.photoURL = "";
+      state.email = "";
+      state.status = 0;
+    },
   },
 });
 
-export const { login } = userSlice.actions;
+export const { login, logout } = userSlice.actions;
 export default userSlice;

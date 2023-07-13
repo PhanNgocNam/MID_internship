@@ -11,8 +11,11 @@ const DefaultLayout: FC<IProps> = ({ children }) => {
   const [isChangeBackgroundHeader, setIsChangeBackgroundHeader] =
     useState<boolean>(false);
 
+  const { status } = useSelector((state: RootState) => state.user);
+
   const handleChangeBg = (e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop } = e.currentTarget;
+    if (!status) return;
     if (scrollTop >= 10) {
       setIsChangeBackgroundHeader(true);
     } else {

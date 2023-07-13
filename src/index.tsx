@@ -5,6 +5,27 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import store from "./configs/store";
+import i18next from "i18next";
+import { initReactI18next } from "react-i18next";
+import HttpApi from "i18next-http-backend";
+import LanguageDetector from "i18next-browser-languagedetector";
+
+i18next
+  .use(initReactI18next) // passes i18n down to react-i18next
+  .use(LanguageDetector)
+  .use(HttpApi)
+  .init({
+    supportedLngs: ["en", "vi"],
+    fallbackLng: "en",
+    debug: false,
+    detection: {
+      order: ["cookie", "htmlTag", "path"],
+      caches: ["cookie"],
+    },
+    backend: {
+      loadPath: "/lang/locales/{{lng}}/translation.json",
+    },
+  });
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
