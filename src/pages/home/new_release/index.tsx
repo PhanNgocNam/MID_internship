@@ -18,7 +18,7 @@ interface INewRelease {
 
 const NewRelease: FC<INewRelease> = ({ items, link, sectionType, title }) => {
   return (
-    <div className="p-2 text-white/80 h-[300px] overflow-auto">
+    <div className="new_release p-2 text-white/80 h-[300px] overflow-auto">
       <h3 className="py-2 text-xl">{title}</h3>
       <div>
         <List
@@ -27,7 +27,7 @@ const NewRelease: FC<INewRelease> = ({ items, link, sectionType, title }) => {
           loading={items.all.length !== 0 ? false : true}
           dataSource={items.all}
           renderItem={(item) => (
-            <List.Item className="border-solid border border-t-white/10 first:border-0">
+            <List.Item className="border-solid border-t border-t-white/10 first:border-0">
               <Thumbnail alt={item.title} size={50} src={item.thumbnailM} />
               <div className="flex flex-col text-right text-white">
                 <h2>{item.title}</h2>
