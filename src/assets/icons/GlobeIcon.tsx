@@ -1,9 +1,5 @@
 import { FC } from "react";
-
-type IconProps = {
-  width: number;
-  height: number;
-};
+import { IconProps } from "./IconProps";
 
 const GlobeIcon: FC<IconProps> = ({ width, height }) => {
   return (

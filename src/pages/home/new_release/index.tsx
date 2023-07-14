@@ -1,6 +1,5 @@
 import { List } from "antd";
 import { FC } from "react";
-import UserAvatar from "../../../components/avatar/UserAvatar";
 import Thumbnail from "../../../components/thumbnail/Thumbnail";
 
 interface IItems {
@@ -16,9 +15,9 @@ interface INewRelease {
   title: string;
 }
 
-const NewRelease: FC<INewRelease> = ({ items, link, sectionType, title }) => {
+const NewRelease: FC<INewRelease> = ({ items, title }) => {
   return (
-    <div className="new_release p-2 text-white/80 h-[300px] overflow-auto">
+    <div className="new_release p-2 text-white/80 h-[300px] overflow-auto border-solid border-b border-white/10">
       <h3 className="py-2 text-xl">{title}</h3>
       <div>
         <List

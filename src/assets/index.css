@@ -26,6 +26,26 @@
   display: none;
 }
 
+.two_line {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  line-height: 20px;
+  word-spacing: normal;
+  letter-spacing: 0.3px;
+}
+
+.one_line {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  line-height: 20px;
+  word-spacing: normal;
+  letter-spacing: 0.3px;
+}
+
 html,
 body,
 div,
