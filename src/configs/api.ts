@@ -1,4 +1,4 @@
-const DOMAIN = "https://apisolfive.app.tranviet.site";
+export const DOMAIN = "https://apisolfive.app.tranviet.site";
 
 const API = {
   GET_DISCOVER_API: DOMAIN + "/api/get/home",

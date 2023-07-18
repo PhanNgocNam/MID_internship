@@ -46,6 +46,13 @@
   letter-spacing: 0.3px;
 }
 
+.ant-tabs-nav-list {
+  color: white !important;
+}
+.ant-tabs-tab .ant-tabs-tab-active {
+  color: white !important;
+}
+
 html,
 body,
 div,

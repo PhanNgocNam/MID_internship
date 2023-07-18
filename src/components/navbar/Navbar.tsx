@@ -24,7 +24,7 @@ const Navbar: FC<INavbar> = ({ isChangeBackgroundHeader }) => {
   const dispatch = useDispatch();
   const [isLogout, setIsLogout] = useState<boolean>(false);
 
-  const { status } = useSelector((state: RootState) => state.user);
+  const status = useSelector((state: RootState) => state.user.status);
   useEffect(() => {
     if (!status) {
       const user: string = localStorage.getItem("user")!;

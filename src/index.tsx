@@ -9,6 +9,8 @@ import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
 import HttpApi from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
+import { ApiProvider } from "@reduxjs/toolkit/query/react";
+import { apiSlice } from "./features/apiSlice";
 
 i18next
   .use(initReactI18next) // passes i18n down to react-i18next
@@ -32,9 +34,11 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ApiProvider api={apiSlice}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </ApiProvider>
   </React.StrictMode>
 );
 

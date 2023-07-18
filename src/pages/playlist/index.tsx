@@ -1,11 +1,12 @@
 import { useEffect, FC, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { get } from "../../utils/request";
 import apiInstance from "../../configs/api";
 import { Skeleton } from "antd";
 import Suffle from "../../assets/icons/Suffle";
+import SingleSong from "../../components/single_song/SingleSong";
 
-interface ISong {
+export interface ISong {
   artistsNames: string;
   duration: number;
   encodeId: string;
@@ -13,9 +14,14 @@ interface ISong {
   title: string;
   thumbnail: string;
   thumbnailM: string;
+  playlistId: string;
+  onCLick?: () => void;
+  nextSongId?: string;
+  prevSongId?: string;
 }
 
 type playlistType = {
+  encodeId: string;
   artistsNames: string;
   contentLastUpdate: number;
   listen: number;
@@ -31,9 +37,9 @@ type playlistType = {
 };
 
 const Playlist: FC = () => {
-  const location = useLocation();
-  const { id } = location.state;
+  const [searchParams] = useSearchParams();
   const [playlist, setPlaylist] = useState<playlistType>({
+    encodeId: "",
     artistsNames: "",
     contentLastUpdate: 0,
     listen: 0,
@@ -48,7 +54,7 @@ const Playlist: FC = () => {
     title: "",
   });
   useEffect(() => {
-    get(apiInstance.PLAYLIST_INFO_API + `?id=${id}`)
+    get(apiInstance.PLAYLIST_INFO_API + `?id=${searchParams.get("list")}`)
       .then((res) => setPlaylist(res.data.data))
       .catch((err) => console.log(err));
   }, []);
@@ -82,20 +88,17 @@ const Playlist: FC = () => {
           </div>
           <div className="text-white/70 overflow-y-auto h-[40%]">
             {playlist.song.items.map((song) => (
-              <div
-                className="flex py-2 px-9 items-center border-t border-solid border-white/10"
+              <SingleSong
+                artistsNames={song.artistsNames}
+                duration={song.duration}
+                encodeId={song.encodeId}
+                thumbnail={song.thumbnail}
+                thumbnailM={song.thumbnailM}
+                releaseDate={song.releaseDate}
+                title={song.title}
                 key={song.encodeId}
-              >
-                <img className="h-12 rounded-sm pr-2" src={song.thumbnail} />
-                <div className="pr-6">
-                  <h1 className="text-lg one_line mb-1">{song.title}</h1>
-                  <p className="text-white/40">{song.artistsNames}</p>
-                </div>
-                <p>
-                  {Math.floor(song.duration / 60)}:
-                  {Math.floor(song.duration % 60)}
-                </p>
-              </div>
+                playlistId={playlist.encodeId}
+              />
             ))}
           </div>
         </div>

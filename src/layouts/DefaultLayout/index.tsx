@@ -2,6 +2,7 @@ import React, { FC, ReactNode, useState, useEffect } from "react";
 import Navbar from "../../components/navbar/Navbar";
 import { useSelector } from "react-redux";
 import { RootState } from "../../configs/store";
+import Player from "../../components/player/Player";
 
 interface IProps {
   children: ReactNode;
@@ -29,6 +30,7 @@ const DefaultLayout: FC<IProps> = ({ children }) => {
     >
       <Navbar isChangeBackgroundHeader={isChangeBackgroundHeader} />
       {children}
+      <Player />
     </div>
   );
 };
