@@ -10,6 +10,8 @@ import {
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import SingleSong from "../../components/single_song/SingleSong";
+import { motion } from "framer-motion";
+import Lyric from "../../components/lyric/Lyric";
 
 const Watch: FC = () => {
   const [searchParams] = useSearchParams();
@@ -26,8 +28,8 @@ const Watch: FC = () => {
       label: `UP NEXT`,
       children: (
         <div className="overflow-y-scroll overflow-x-hidden h-[40vh]">
-          {playLists.map((item: ISong, index: number, orignal: any) => (
-            <div className="">
+          {playLists?.map((item: ISong, index: number, orignal: any) => (
+            <div>
               <SingleSong
                 key={item.encodeId}
                 artistsNames={item.artistsNames}
@@ -49,7 +51,7 @@ const Watch: FC = () => {
     {
       key: "2",
       label: `LYRICS`,
-      children: `Content of Tab Pane 2`,
+      children: <Lyric />,
     },
   ];
 
@@ -60,18 +62,32 @@ const Watch: FC = () => {
   }, [playList]);
 
   return (
-    <div className="min-h-full bg-black pt-[64px] p-2">
-      <div className="max-h-[40vh] bg-white/80 h-[40vh] flex items-center justify-center">
-        <img
-          className="rounded-full"
+    <motion.div
+      initial={{ y: "100%" }}
+      animate={{ y: 0, scaleY: 1 }}
+      exit={{ y: "100%", opacity: 0 }}
+      transition={{ duration: 0.5 }}
+      className="h-full bg-black pt-[64px] p-2"
+    >
+      <motion.div
+        initial={{ opacity: 0, x: "60%", y: "60%", scale: 0.6 }}
+        animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="max-h-[40vh] bg-slate-100/70 rounded-sm h-[40vh] flex items-center justify-center"
+      >
+        <motion.img
+          animate={{ rotate: 360 }}
+          transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+          className="rounded-full border-2 p-2 border-gray-600/50 border-solid z-10"
           src={song?.data?.data?.thumbnailM}
-          alt={activeThumnail}
+          alt={""}
         />
-      </div>
+      </motion.div>
       <div className="h-[41vh]">
         <Tabs defaultActiveKey="1" items={items} centered />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

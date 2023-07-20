@@ -53,6 +53,11 @@
   color: white !important;
 }
 
+/* .ant-tabs-content.ant-tabs-content-top {
+  height: 40vh !important;
+  overflow: auto !important;
+} */
+
 html,
 body,
 div,

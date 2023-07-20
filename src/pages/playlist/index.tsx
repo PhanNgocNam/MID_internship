@@ -5,6 +5,7 @@ import apiInstance from "../../configs/api";
 import { Skeleton } from "antd";
 import Suffle from "../../assets/icons/Suffle";
 import SingleSong from "../../components/single_song/SingleSong";
+import { motion } from "framer-motion";
 
 export interface ISong {
   artistsNames: string;
@@ -58,9 +59,15 @@ const Playlist: FC = () => {
       .then((res) => setPlaylist(res.data.data))
       .catch((err) => console.log(err));
   }, []);
-  console.log(playlist);
+  // console.log(playlist);
   return (
-    <div className="bg-black h-[100vh] px-2 text-white/80 overflow-hidden">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      className="bg-black h-[100vh] px-2 text-white/80 overflow-hidden"
+    >
       {playlist.thumbnail ? (
         <div className="h-full pt-[64px]">
           <div className="py-2 h-fit  flex flex-col justify-center items-center">
@@ -110,7 +117,7 @@ const Playlist: FC = () => {
           <Skeleton className="bg-slate-200/30  py-16" active />
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

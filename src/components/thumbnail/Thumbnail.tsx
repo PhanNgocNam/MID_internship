@@ -7,7 +7,7 @@ import { RootState } from "../../configs/store";
 import {
   triggerEndASingleSong,
   triggerPlayASingleSong,
-} from "../../features/currentSongIdActive";
+} from "../../features/currentSongActiveSlice";
 
 interface ThumbnailProps {
   alt: string;

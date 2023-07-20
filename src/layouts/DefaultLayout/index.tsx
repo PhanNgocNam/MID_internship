@@ -26,7 +26,7 @@ const DefaultLayout: FC<IProps> = ({ children }) => {
   return (
     <div
       onScroll={(e) => handleChangeBg(e)}
-      className="fixed top-0 left-0 right-0 bottom-0 overflow-auto"
+      className="fixed top-0 left-0 right-0 bottom-0 overflow-auto bg-black"
     >
       <Navbar isChangeBackgroundHeader={isChangeBackgroundHeader} />
       {children}

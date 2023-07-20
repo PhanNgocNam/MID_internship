@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Thumbnail from "../../../components/thumbnail/Thumbnail";
 import { useDispatch, useSelector } from "react-redux";
-import { triggerPlayASingleSong } from "../../../features/currentSongIdActive";
+import { triggerPlayASingleSong } from "../../../features/currentSongActiveSlice";
 import { RootState } from "../../../configs/store";
 import clsx from "clsx";
 

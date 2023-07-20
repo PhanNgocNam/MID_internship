@@ -2,13 +2,13 @@ import React, { FC } from "react";
 import { ISong } from "../../pages/playlist";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { triggerPlayASingleSong } from "../../features/currentSongIdActive";
+import { triggerPlayASingleSong } from "../../features/currentSongActiveSlice";
 const SingleSong: FC<ISong> = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const params = { v: props.encodeId, list: props.playlistId };
 
-  console.log("In singleSong: ", props.nextSongId);
+  // console.log("In singleSong: ", props.nextSongId);
 
   return (
     <div
