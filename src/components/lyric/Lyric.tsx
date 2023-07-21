@@ -3,6 +3,7 @@ import { useGetLyricByIdQuery } from "../../features/apiSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../configs/store";
 import { motion } from "framer-motion";
+import clsx from "clsx";
 
 type Props = {};
 
@@ -17,9 +18,9 @@ interface ICentence {
 }
 
 interface ILyric {
-  pre: string;
-  now: string;
-  next: string;
+  startTime: number;
+  endTime: number;
+  lyric: string;
 }
 
 export default function Lyric({}: Props) {
@@ -27,7 +28,7 @@ export default function Lyric({}: Props) {
   const { time } = useSelector((state: RootState) => state.currentTime);
   const { data: lyricRawData } = useGetLyricByIdQuery(activeSongId);
   const moveFowardRef = useRef<number>(0);
-  const lyricRef = useRef<ILyric>({ pre: "", now: "", next: "" });
+  const lyricRef = useRef<HTMLParagraphElement>(null);
   const lyricData = lyricRawData?.data?.data?.sentences.map(
     (sentence: ICentence) => {
       const rawLyric = sentence.words.map((word) => word.data);
@@ -39,41 +40,25 @@ export default function Lyric({}: Props) {
     }
   );
 
-  // console.log(lyricData);
+  // console.log(lyricData[0]);
   return (
     <div className="text-white h-[40vh] overflow-x-hidden overflow-y-scroll relative">
-      <div
-        style={{ top: `${moveFowardRef.current}px` }}
-        className="absolute right-0 left-0 bottom-0"
-      >
-        {lyricData?.map((l: any, index: number, original: any) => {
+      <div className="pb-36">
+        {lyricData?.map((l: ILyric, index: number, original: any) => {
           if (time > l.startTime && time < l.endTime) {
-            const { pre, now, next } = lyricRef.current;
-            lyricRef.current.pre = original[index - 1]?.lyric;
-            lyricRef.current.now = original[index]?.lyric;
-            lyricRef.current.next = original[index + 1]?.lyric;
-            return (
-              <>
-                {now ? (
-                  <motion.div
-                    initial={{ opacity: 0.9 }}
-                    animate={{ opacity: 1 }}
-                    // exit={{ y: "-30px" }}
-                    transition={{ duration: 0.1 }}
-                    className="text-center"
-                  >
-                    <p className="py-4">{pre}</p>
-                    <h1 className="text-lg text-center bg-slate-400 text-purple-800 font-bold">
-                      {now}
-                    </h1>
-                    <p className="py-4">{next} </p>
-                  </motion.div>
-                ) : (
-                  <h1>...</h1>
-                )}
-              </>
-            );
+            lyricRef.current?.scrollIntoView({ behavior: "smooth" });
           }
+          return (
+            <p
+              ref={time > l.startTime && time < l.endTime ? lyricRef : null}
+              key={l.startTime}
+              className={`text-center py-2 ${clsx({
+                ["s"]: time >= l.startTime && time <= l.endTime,
+              })}`}
+            >
+              {l.lyric}
+            </p>
+          );
         })}
       </div>
     </div>

@@ -45,6 +45,12 @@
   word-spacing: normal;
   letter-spacing: 0.3px;
 }
+.s {
+  color: purple;
+  background: rgba(252, 255, 255, 0.1);
+  font-weight: bolder;
+  font-size: 20px;
+}
 
 .ant-tabs-nav-list {
   color: white !important;

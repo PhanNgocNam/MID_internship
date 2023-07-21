@@ -59,7 +59,7 @@ const Playlist: FC = () => {
       .then((res) => setPlaylist(res.data.data))
       .catch((err) => console.log(err));
   }, []);
-  // console.log(playlist);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -69,14 +69,11 @@ const Playlist: FC = () => {
       className="bg-black h-[100vh] px-2 text-white/80 overflow-hidden"
     >
       {playlist.thumbnail ? (
-        <div className="h-full pt-[64px]">
-          <div className="py-2 h-fit  flex flex-col justify-center items-center">
-            <img
-              src={playlist.thumbnailM}
-              className="max-h-[320px] rounded-md"
-            />
+        <>
+          <div className="mt-[64px] h-[40vh]  flex flex-col justify-start items-center">
+            <img src={playlist.thumbnailM} className="h-[160px] rounded-md" />
             <h1 className="text-[22px] py-[2px] mt-3">{playlist.title}</h1>
-            <p className="text-white/60 py-[2px]">
+            <p className="text-white/60 text-sm py-[2px]">
               Cập nhật:{" "}
               {new Date(playlist.contentLastUpdate * 1000).toLocaleString(
                 "en-GB",
@@ -85,15 +82,17 @@ const Playlist: FC = () => {
                 }
               )}
             </p>
-            <p className="text-white/60 py-[2px]">{playlist.artistsNames}</p>
-            <p className="text-white/60 py-[2px]">
+            <p className="text-white/60 text-sm py-[2px]">
+              {playlist.artistsNames}
+            </p>
+            <p className="text-white/60 text-sm py-[2px]">
               {Math.floor(playlist.like / 1000)}k yêu thích
             </p>
             <button className="flex items-center justify-between w-fit border border-solid border-white/40 p-3 rounded-full text-black bg-white/70 mt-3">
               <Suffle width={20} height={20} /> Phát ngẫu nhiên
             </button>
           </div>
-          <div className="text-white/70 overflow-y-auto h-[40%]">
+          <div className="text-white/70 overflow-y-auto pb-40 h-[60%]">
             {playlist.song.items.map((song) => (
               <SingleSong
                 artistsNames={song.artistsNames}
@@ -108,7 +107,7 @@ const Playlist: FC = () => {
               />
             ))}
           </div>
-        </div>
+        </>
       ) : (
         <div className="h-full overflow-hidden">
           <Skeleton className="bg-slate-200/30  py-16" active />
