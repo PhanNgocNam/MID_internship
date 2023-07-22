@@ -3,11 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useGetCurrentSongByIdQuery } from "../../features/apiSlice";
 import { RootState } from "../../configs/store";
 import { Spin } from "antd";
-import {
-  useSearchParams,
-  useNavigate,
-  createSearchParams,
-} from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import PauseIcon from "../../assets/icons/PauseIcon";
 import PlayIcon from "../../assets/icons/PlayIcon";
 import UpIcon from "../../assets/icons/UpIcon";
@@ -15,7 +11,8 @@ import DownIcon from "../../assets/icons/DownIcon";
 import { dispatchCurrenttime } from "../../features/currentTimeSlice";
 import { Slider } from "antd";
 import clsx from "clsx";
-import ReactPlayer from "react-player";
+import Audio from "./Audio";
+
 import {
   BiSkipNext,
   BiSkipPrevious,
@@ -29,7 +26,7 @@ const Player: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
-  const [currentSongURL, setCurrentSongURL] = useState({});
+  const [currentSongURL, setCurrentSongURL] = useState<string>("");
   const [percent, setPercent] = useState<number>(0);
   const audioRef = useRef<any>(null);
   const [loop, setloop] = useState<boolean>(false);
@@ -98,28 +95,15 @@ const Player: FC = () => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 h-12 bg-slate-200 flex justify-between px-2 items-center">
-      <ReactPlayer
-        style={{ display: "none" }}
-        url={`${currentSongURL}`}
-        ref={audioRef}
-        config={{ file: { forceAudio: true } }}
-        playing={isPlaying}
-        onEnded={() => handleNextSong()}
+      <Audio
+        audioRef={audioRef}
+        currentSongURL={currentSongURL}
         loop={loop}
+        isPlaying={isPlaying}
+        setLoaded={setLoaded}
+        setPercent={setPercent}
         volume={volume}
-        // muted={true}
-        onReady={() => setLoading(false)}
-        onProgress={(e) => {
-          dispatch(
-            dispatchCurrenttime(audioRef.current.getCurrentTime() * 1000)
-          );
-          setPercent(
-            (audioRef.current.getCurrentTime() /
-              audioRef.current.getDuration()) *
-              100
-          );
-          setLoaded(e.loaded * 100);
-        }}
+        setLoading={setLoading}
       />
       <div className="z-10 w-[100%] absolute top-0  right-0 left-0 overflow-hidden -translate-y-[50%]">
         <Slider
