@@ -8,8 +8,6 @@ const SingleSong: FC<ISong> = (props) => {
   const dispatch = useDispatch();
   const params = { v: props.encodeId, list: props.playlistId };
 
-  // console.log("In singleSong: ", props.nextSongId);
-
   return (
     <div
       onClick={() => {
@@ -20,9 +18,6 @@ const SingleSong: FC<ISong> = (props) => {
         dispatch(
           triggerPlayASingleSong({
             activeSongId: props.encodeId,
-            activeThumnail: props.thumbnailM,
-            nextSongId: props.nextSongId,
-            prevSongId: props.prevSongId,
           })
         );
       }}

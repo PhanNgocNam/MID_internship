@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
 import { RootState } from "../../configs/store";
+import { useSearchParams } from "react-router-dom";
 import { ISong } from "../playlist";
 import {
-  useGetPlaylistByIdQuery,
+  useGetPlaylistInfoByIdQuery,
   useGetSongInfoByIdQuery,
 } from "../../features/apiSlice";
 import { Tabs } from "antd";
@@ -15,10 +15,9 @@ import Lyric from "../../components/lyric/Lyric";
 
 const Watch: FC = () => {
   const [searchParams] = useSearchParams();
-  const { activeThumnail } = useSelector(
-    (state: RootState) => state.activeSong
+  const { data: playList } = useGetPlaylistInfoByIdQuery(
+    searchParams.get("list")
   );
-  const { data: playList } = useGetPlaylistByIdQuery(searchParams.get("list"));
   const { data: song } = useGetSongInfoByIdQuery(searchParams.get("v"));
   const [playLists, setPlayLists] = useState<any>([]);
 
@@ -74,8 +73,10 @@ const Watch: FC = () => {
         animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
-        className="max-h-[40vh] bg-slate-100/70 rounded-sm h-[40vh] flex items-center justify-center"
+        style={{ backgroundImage: `url(${song?.data?.data?.thumbnailM})` }}
+        className="relative max-h-[40vh] bg-cover rounded-sm h-[40vh] flex items-center justify-center"
       >
+        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black/80" />
         <motion.img
           animate={{ rotate: 360 }}
           transition={{ duration: 6, repeat: Infinity, ease: "linear" }}

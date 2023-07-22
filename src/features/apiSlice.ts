@@ -11,18 +11,18 @@ export const apiSlice = createApi({
     getSongInfoById: builder.query({
       query: (id) => `/get/song/info?id=${id}`,
     }),
-    getPlaylistById: builder.query({
-      query: (id) => `/get/playlist/info?id=${id}`,
-    }),
     getLyricById: builder.query({
       query: (id) => `get/song/lyric?id=${id}`,
+    }),
+    getPlaylistInfoById: builder.query({
+      query: (id) => `/get/playlist/info?id=${id}`,
     }),
   }),
 });
 
 export const {
   useGetCurrentSongByIdQuery,
-  useGetPlaylistByIdQuery,
   useGetSongInfoByIdQuery,
   useGetLyricByIdQuery,
+  useGetPlaylistInfoByIdQuery,
 } = apiSlice;

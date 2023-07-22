@@ -2,13 +2,14 @@ import React, { FC } from "react";
 
 import { IconProps } from "./IconProps";
 
-const PauseIcon: FC<IconProps> = ({ width, height }) => {
+const PauseIcon: FC<IconProps> = ({ width, height, onClick, color }) => {
   return (
     <svg
+      onClick={onClick}
       xmlns="http://www.w3.org/2000/svg"
       width={width}
       height={height}
-      fill="currentColor"
+      fill={color}
       className="bi bi-pause"
       viewBox="0 0 16 16"
     >

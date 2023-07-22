@@ -32,7 +32,7 @@ const Section: FC<SectionProps> = ({ title, items }) => {
     <div className="p-2 text-white/90 mt-2">
       <h3 className="py-2 text-xl">{title}</h3>
       <Splide options={{ perPage: 2, drag: "free", pagination: false }}>
-        {items.map((playlist) => {
+        {items?.map((playlist) => {
           const params = { list: playlist.encodeId };
           return (
             <SplideSlide
@@ -40,7 +40,6 @@ const Section: FC<SectionProps> = ({ title, items }) => {
                 navigate({
                   pathname: "/playlist",
                   search: `${createSearchParams(params)}`,
-                  // {state: { id: playlist.encodeId }},
                 })
               }
               key={playlist.encodeId}

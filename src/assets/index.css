@@ -46,10 +46,9 @@
   letter-spacing: 0.3px;
 }
 .s {
-  color: purple;
-  background: rgba(252, 255, 255, 0.1);
-  font-weight: bolder;
-  font-size: 20px;
+  color: rgba(22, 119, 255);
+  font-weight: 500;
+  font-size: 18px;
 }
 
 .ant-tabs-nav-list {

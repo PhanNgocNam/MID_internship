@@ -26,7 +26,7 @@ const NewRelease: FC<INewRelease> = ({ items, title }) => {
     <div className="new_release p-2 text-white/80 h-[300px] overflow-auto border-solid border border-white/10">
       <h3 className="py-2 text-xl">{title}</h3>
       <div>
-        {items.all.map((song) => (
+        {items?.all.map((song) => (
           <div
             key={song.encodeId}
             className={`flex justify-between items-center border-t border-solid border-white/10 py-2 ${clsx(

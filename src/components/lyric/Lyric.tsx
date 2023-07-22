@@ -27,7 +27,6 @@ export default function Lyric({}: Props) {
   const { activeSongId } = useSelector((state: RootState) => state.activeSong);
   const { time } = useSelector((state: RootState) => state.currentTime);
   const { data: lyricRawData } = useGetLyricByIdQuery(activeSongId);
-  const moveFowardRef = useRef<number>(0);
   const lyricRef = useRef<HTMLParagraphElement>(null);
   const lyricData = lyricRawData?.data?.data?.sentences.map(
     (sentence: ICentence) => {
@@ -53,7 +52,7 @@ export default function Lyric({}: Props) {
               ref={time > l.startTime && time < l.endTime ? lyricRef : null}
               key={l.startTime}
               className={`text-center py-2 ${clsx({
-                ["s"]: time >= l.startTime && time <= l.endTime,
+                ["s"]: time >= l.startTime && time <= l.endTime + 100,
               })}`}
             >
               {l.lyric}
