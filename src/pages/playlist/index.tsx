@@ -73,13 +73,7 @@ const Playlist: FC = () => {
   }, [playListInfo]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
-      className="bg-black h-[100vh] px-2 text-white/80 overflow-hidden"
-    >
+    <div className="bg-black h-[100vh] px-2 text-white/80 overflow-hidden">
       {playlist ? (
         <>
           <div className="mt-[64px] h-fit py-3  flex justify-between items-center">
@@ -133,7 +127,7 @@ const Playlist: FC = () => {
           <Skeleton className="bg-slate-200/30  py-16" active />
         </div>
       )}
-    </motion.div>
+    </div>
   );
 };
 

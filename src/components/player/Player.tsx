@@ -12,7 +12,6 @@ import { dispatchCurrenttime } from "../../features/currentTimeSlice";
 import { Slider } from "antd";
 import clsx from "clsx";
 import Audio from "./Audio";
-
 import {
   BiSkipNext,
   BiSkipPrevious,
@@ -38,7 +37,7 @@ const Player: FC = () => {
     (state: RootState) => state.activePlaylist
   );
   const [isPlaying, setIsPlaying] = useState<boolean>(
-    activeSongId ? false : true
+    activeSongId ? true : false
   );
 
   const { data } = useGetCurrentSongByIdQuery(activeSongId);
@@ -47,10 +46,6 @@ const Player: FC = () => {
       setCurrentSongURL(data?.data?.data?.[128]);
     }
   }, [data]);
-
-  useEffect(() => {
-    audioRef.current?.seekTo(percent / 100, "fraction");
-  }, [percent]);
 
   useEffect(() => {
     setLoading(true);
@@ -91,19 +86,17 @@ const Player: FC = () => {
     );
   };
 
-  // console.log(audioRef.current?.duration);
-
   return (
     <div className="fixed bottom-0 left-0 right-0 h-12 bg-slate-200 flex justify-between px-2 items-center">
       <Audio
-        audioRef={audioRef}
+        ref={audioRef}
         currentSongURL={currentSongURL}
-        loop={loop}
         isPlaying={isPlaying}
+        loop={loop}
         setLoaded={setLoaded}
-        setPercent={setPercent}
         volume={volume}
         setLoading={setLoading}
+        setPercent={setPercent}
       />
       <div className="z-10 w-[100%] absolute top-0  right-0 left-0 overflow-hidden -translate-y-[50%]">
         <Slider
@@ -111,6 +104,7 @@ const Player: FC = () => {
           value={percent}
           onChange={(percentE) => {
             setPercent(percentE);
+            audioRef.current?.seekTo(percentE / 100, "fraction");
           }}
           style={{ margin: 0 }}
           trackStyle={{
@@ -177,24 +171,30 @@ const Player: FC = () => {
         {searchParams.get("v") ? (
           <button
             className="px-2"
-            onClick={() =>
+            onClick={() => {
+              if (!searchParams.get("list")) return navigate(-1);
               navigate({
                 pathname: "/playlist",
                 search: `?list=${searchParams.get("list")}`,
-              })
-            }
+              });
+            }}
           >
             <DownIcon width={16} height={16} color="black" />
           </button>
         ) : (
           <button
             className="px-2"
-            onClick={() =>
+            onClick={() => {
+              if (!searchParams.get("list"))
+                return navigate({
+                  pathname: "/watch",
+                  search: `?v=${activeSongId}`,
+                });
               navigate({
                 pathname: "/watch",
                 search: `?v=${activeSongId}&list=${searchParams.get("list")}`,
-              })
-            }
+              });
+            }}
           >
             <UpIcon width={16} height={16} color="black" />
           </button>

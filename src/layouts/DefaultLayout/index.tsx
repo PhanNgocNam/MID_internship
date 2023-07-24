@@ -13,6 +13,7 @@ const DefaultLayout: FC<IProps> = ({ children }) => {
     useState<boolean>(false);
 
   const { status } = useSelector((state: RootState) => state.user);
+  const { activeSongId } = useSelector((state: RootState) => state.activeSong);
 
   const handleChangeBg = (e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop } = e.currentTarget;
@@ -30,7 +31,7 @@ const DefaultLayout: FC<IProps> = ({ children }) => {
     >
       <Navbar isChangeBackgroundHeader={isChangeBackgroundHeader} />
       {children}
-      <Player />
+      {activeSongId ? <Player /> : ""}
     </div>
   );
 };

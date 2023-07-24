@@ -28,7 +28,7 @@ export default function Lyric({}: Props) {
   const { time } = useSelector((state: RootState) => state.currentTime);
   const { data: lyricRawData } = useGetLyricByIdQuery(activeSongId);
   const lyricRef = useRef<HTMLParagraphElement>(null);
-  const lyricData = lyricRawData?.data?.data?.sentences.map(
+  const lyricData = lyricRawData?.data?.data?.sentences?.map(
     (sentence: ICentence) => {
       const rawLyric = sentence.words.map((word) => word.data);
       return {

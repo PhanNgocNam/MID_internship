@@ -5,6 +5,7 @@ export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: DOMAIN + "/api" }),
   endpoints: (builder) => ({
+    getHomepageDate: builder.query<any, void>({ query: () => "/get/home" }),
     getCurrentSongById: builder.query({
       query: (id) => `/get/song/sound?id=${id}`,
     }),
@@ -21,6 +22,7 @@ export const apiSlice = createApi({
 });
 
 export const {
+  useGetHomepageDateQuery,
   useGetCurrentSongByIdQuery,
   useGetSongInfoByIdQuery,
   useGetLyricByIdQuery,

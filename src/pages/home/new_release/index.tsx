@@ -39,7 +39,7 @@ const NewRelease: FC<INewRelease> = ({ items, title }) => {
               size={50}
               src={song.thumbnailM}
             />
-            <div className="flex flex-col text-right text-white ">
+            <div className="flex flex-col text-right text-white">
               <h2 className="py-1">{song.title}</h2>
               <h4 className="text-white/50 text-xs">{song.artistsNames}</h4>
             </div>

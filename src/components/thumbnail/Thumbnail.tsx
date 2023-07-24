@@ -1,14 +1,13 @@
 import { FC, useEffect, useState } from "react";
 import { Avatar } from "antd";
 import IsPlaying from "../../assets/icons/IsPlaying";
-import PlayIcon from "../../assets/icons/PlayIcon";
+import PlayIcon from "../../assets/icons/PlayIconOnThmbnail";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../configs/store";
 import {
-  triggerEndASingleSong,
   triggerPlayASingleSong,
+  triggerEndASingleSong,
 } from "../../features/currentSongActiveSlice";
-
 interface ThumbnailProps {
   alt: string;
   size: number;
@@ -18,15 +17,15 @@ interface ThumbnailProps {
 }
 
 const Thumbnail: FC<ThumbnailProps> = ({ alt, size, src, onClick, songId }) => {
-  const activeSongId = useSelector((state: RootState) => state.activeSong);
+  const { activeSongId } = useSelector((state: RootState) => state.activeSong);
   const [isPlayingItSelf, setIsPlayingItSelf] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    activeSongId.activeSongId === songId
+    activeSongId === songId
       ? setIsPlayingItSelf(true)
       : setIsPlayingItSelf(false);
-  }, [activeSongId.activeSongId]);
+  }, [activeSongId]);
 
   return (
     <div className="relative">
@@ -50,7 +49,7 @@ const Thumbnail: FC<ThumbnailProps> = ({ alt, size, src, onClick, songId }) => {
         <PlayIcon
           onClick={() => {
             setIsPlayingItSelf(true);
-            dispatch(triggerPlayASingleSong(songId));
+            dispatch(triggerPlayASingleSong({ activeSongId: songId }));
           }}
           height={size / 2}
           width={size / 2}

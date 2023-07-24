@@ -6,21 +6,29 @@ import { get } from "../../utils/request";
 import apiInstance from "../../configs/api";
 import { Skeleton, Spin } from "antd";
 import Section from "./home_slide_section/Section.home";
+import { useGetHomepageDateQuery } from "../../features/apiSlice";
 
 const Home: FC = () => {
   const [homeData, setHomeData] = useState<Array<any>>([]);
+  const { data: HomePageData } = useGetHomepageDateQuery();
   useEffect(() => {
-    get(`${apiInstance.GET_DISCOVER_API}`)
-      .then((res) => setHomeData(res.data.data.items))
-      .catch((err) => console.log(err));
+    if (HomePageData) {
+      setHomeData(HomePageData?.data?.data?.items);
+    }
+  }, [HomePageData]);
+
+  useEffect(() => {
+    if (homeData.length) {
+      const middlePart = homeData.slice(3, 8);
+    }
   }, []);
 
-  // console.log(homeData[3]);
+  console.log(homeData);
   return (
     <div className="bg-black min-h-[100vh]">
       <Categories />
       <HomeBanner />
-      {homeData.length !== 0 ? (
+      {homeData.length ? (
         <>
           <NewRelease
             items={homeData[2].items}
@@ -28,7 +36,10 @@ const Home: FC = () => {
             title={homeData[2].title}
             link={homeData[2].link}
           />
-          <Section title={homeData[3].title} items={homeData[3].items} />
+          {homeData.slice(3, 9)?.map((sec, index) => (
+            <Section title={sec.title} items={sec.items} key={index} />
+          ))}
+          {/* <Section title={homeData[3].title} items={homeData[3].items} /> */}
         </>
       ) : (
         <div className="min-h-[100px] flex items-center justify-center">

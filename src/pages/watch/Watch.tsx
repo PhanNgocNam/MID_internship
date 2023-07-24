@@ -28,9 +28,8 @@ const Watch: FC = () => {
       children: (
         <div className="overflow-y-scroll overflow-x-hidden h-[40vh]">
           {playLists?.map((item: ISong, index: number, orignal: any) => (
-            <div>
+            <div key={item.encodeId}>
               <SingleSong
-                key={item.encodeId}
                 artistsNames={item.artistsNames}
                 duration={item.duration}
                 encodeId={item.encodeId}
@@ -63,7 +62,7 @@ const Watch: FC = () => {
   return (
     <motion.div
       initial={{ y: "100%" }}
-      animate={{ y: 0, scaleY: 1 }}
+      animate={{ y: 0 }}
       exit={{ y: "100%", opacity: 0 }}
       transition={{ duration: 0.5 }}
       className="h-full bg-black pt-[64px] p-2"

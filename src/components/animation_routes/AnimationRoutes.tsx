@@ -1,5 +1,4 @@
 import { FC } from "react";
-
 import { Routes, Route, useLocation } from "react-router-dom";
 import { routes } from "../../routes";
 import DefaultLayout from "../../layouts/DefaultLayout";
