@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import { Button } from "antd";
 import { signInWithGoogle } from "../../configs/firebase";
-import { IUser, loginService } from "../../services/login/loginService";
+import { loginService } from "../../services/login/loginService";
 import { login } from "../../features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../configs/store";
@@ -22,9 +22,10 @@ interface INavbar {
 const Navbar: FC<INavbar> = ({ isChangeBackgroundHeader }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isLogout, setIsLogout] = useState<boolean>(false);
+  const [isLogout, setIsLogout] = useState<boolean>(true);
 
-  const status = useSelector((state: RootState) => state.user.status);
+  const { status } = useSelector((state: RootState) => state.user);
+
   useEffect(() => {
     if (!status) {
       const user: string = localStorage.getItem("user")!;
@@ -36,7 +37,7 @@ const Navbar: FC<INavbar> = ({ isChangeBackgroundHeader }) => {
 
   return (
     <div
-      className={`bg-black flex justify-between items-center h-[64px] p-2 text-slate-100 border-b border-white/10 border-solid fixed top-0 left-0 right-0 z-20 transition-colors ${clsx(
+      className={`bg-black flex justify-between items-center h-[64px] p-2 text-slate-100 border-b border-white/10 border-solid fixed top-0 left-0 right-0 z-20 transition-colors md:mx-auto md:w-full ${clsx(
         {
           ["changeBg"]: isChangeBackgroundHeader,
           ["bg-transparent"]: status,
@@ -49,21 +50,26 @@ const Navbar: FC<INavbar> = ({ isChangeBackgroundHeader }) => {
           <div className="flex w-[60%] items-center justify-evenly ">
             {data.map((menuItem, index) => {
               return (
-                <menuItem.icon
-                  className="text-xl text-white/80"
+                <div
                   key={index}
+                  className="cursor-pointer"
                   onClick={() => navigate(menuItem.path)}
-                />
+                >
+                  <menuItem.icon className="text-xl text-white/80 md:hidden" />
+                  <span className="hidden md:block">{menuItem.label}</span>
+                </div>
               );
             })}
             <SearchBox />
           </div>
-          <LangsComboBox />
-          <UserAvatar
-            onClick={() => setIsLogout(!isLogout)}
-            size={28}
-            alt="Avatar..."
-          />
+          <div className="flex w-20 justify-between">
+            <LangsComboBox />
+            <UserAvatar
+              onClick={() => setIsLogout(!isLogout)}
+              size={28}
+              alt="Avatar..."
+            />
+          </div>
           {isLogout ? <LogoutPopup /> : ""}
         </>
       ) : (

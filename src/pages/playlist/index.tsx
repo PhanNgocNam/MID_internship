@@ -19,12 +19,9 @@ export interface ISong {
   thumbnail: string;
   thumbnailM: string;
   playlistId: string;
-  onCLick?: () => void;
-  nextSongId?: string;
-  prevSongId?: string;
 }
 
-type playlistType = {
+export type playlistType = {
   encodeId: string;
   artistsNames: string;
   contentLastUpdate: number;
@@ -69,6 +66,12 @@ const Playlist: FC = () => {
   };
 
   useEffect(() => {
+    if (playlist) {
+      hanlePreProcessingPlaylistInfoData(playlist);
+    }
+  }, [searchParams.get("list"), playlist]);
+
+  useEffect(() => {
     setPlaylist(playListInfo?.data?.data);
   }, [playListInfo]);
 
@@ -76,7 +79,10 @@ const Playlist: FC = () => {
     <div className="bg-black h-[100vh] px-2 text-white/80 overflow-hidden">
       {playlist ? (
         <>
-          <div className="mt-[64px] h-fit py-3  flex justify-between items-center">
+          <div
+            // onClick={() => hanlePreProcessingPlaylistInfoData(playlist)}
+            className="mt-[64px] h-fit py-3  flex justify-between items-center"
+          >
             <img src={playlist.thumbnailM} className="h-[160px] rounded-md" />
             <div className="ml-2 flex items-start flex-col">
               <h1 className="text-lg">{playlist.title}</h1>
@@ -95,13 +101,16 @@ const Playlist: FC = () => {
               <p className="text-white/60 text-sm py-[2px]">
                 {Math.floor(playlist.like / 1000)}k yêu thích
               </p>
-              <button className="flex items-center p-2 justify-between w-fit border border-solid border-white/40  rounded-full text-black bg-white/70">
-                <Suffle width={20} height={20} /> Phát ngẫu nhiên
-              </button>
             </div>
           </div>
+          <button
+            // onClick={() => hanlePreProcessingPlaylistInfoData(playlist)}
+            className="flex items-center p-2 justify-between w-fit border border-solid border-white/40  rounded-full text-black bg-white/70 mb-3  "
+          >
+            <Suffle width={20} height={20} /> Phát ngẫu nhiên
+          </button>
           <div
-            onClick={() => hanlePreProcessingPlaylistInfoData(playlist)}
+            // onClick={() => hanlePreProcessingPlaylistInfoData(playlist)}
             className="text-white/70 overflow-y-auto pb-40 h-[70%]"
           >
             {playlist.song.items.map((song) => (

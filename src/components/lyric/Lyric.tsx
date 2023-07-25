@@ -52,7 +52,7 @@ export default function Lyric({}: Props) {
               ref={time > l.startTime && time < l.endTime ? lyricRef : null}
               key={l.startTime}
               className={`text-center py-2 ${clsx({
-                ["s"]: time >= l.startTime && time <= l.endTime + 100,
+                ["s"]: time >= l.startTime && time <= l.endTime + 10,
               })}`}
             >
               {l.lyric}

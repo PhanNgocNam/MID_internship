@@ -17,15 +17,9 @@ const Home: FC = () => {
     }
   }, [HomePageData]);
 
-  useEffect(() => {
-    if (homeData.length) {
-      const middlePart = homeData.slice(3, 8);
-    }
-  }, []);
-
-  console.log(homeData);
+  // console.log(homeData);
   return (
-    <div className="bg-black min-h-[100vh]">
+    <div className="bg-black min-h-[100vh] ">
       <Categories />
       <HomeBanner />
       {homeData.length ? (

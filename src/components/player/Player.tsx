@@ -20,6 +20,7 @@ import {
   BiRepeat,
 } from "react-icons/bi";
 import { triggerPlayASingleSong } from "../../features/currentSongActiveSlice";
+import { triggerShufferingMode } from "../../features/isShuffering";
 
 const Player: FC = () => {
   const navigate = useNavigate();
@@ -35,6 +36,9 @@ const Player: FC = () => {
   const { activeSongId } = useSelector((state: RootState) => state.activeSong);
   const { playlistIsActive } = useSelector(
     (state: RootState) => state.activePlaylist
+  );
+  const { isShuffringMode } = useSelector(
+    (state: RootState) => state.shufferingMode
   );
   const [isPlaying, setIsPlaying] = useState<boolean>(
     activeSongId ? true : false
@@ -86,6 +90,24 @@ const Player: FC = () => {
     );
   };
 
+  const handleShufferSong = () => {
+    const songRandomIndex: number = Math.floor(
+      Math.random() * playlistIsActive.length
+    );
+    songRandomIndex &&
+      navigate({
+        pathname: "/watch",
+        search: `?v=${
+          playlistIsActive[songRandomIndex]
+        }&list=${searchParams.get("list")}`,
+      });
+    dispatch(
+      triggerPlayASingleSong({
+        activeSongId: playlistIsActive[songRandomIndex],
+      })
+    );
+  };
+
   return (
     <div className="fixed bottom-0 left-0 right-0 h-12 bg-slate-200 flex justify-between px-2 items-center">
       <Audio
@@ -97,6 +119,7 @@ const Player: FC = () => {
         volume={volume}
         setLoading={setLoading}
         setPercent={setPercent}
+        handleNextSong={isShuffringMode ? handleShufferSong : handleNextSong}
       />
       <div className="z-10 w-[100%] absolute top-0  right-0 left-0 overflow-hidden -translate-y-[50%]">
         <Slider
@@ -155,15 +178,29 @@ const Player: FC = () => {
         <div>
           <BiVolumeFull />
         </div>
-        <div>
-          <BiShuffle />
+        <div
+          className={`${clsx({
+            "bg-black/10": isShuffringMode,
+          })} rounded-full h-7 w-7 flex items-center justify-center`}
+        >
+          <BiShuffle
+            onClick={() => {
+              dispatch(triggerShufferingMode(!isShuffringMode));
+              setloop(false);
+            }}
+          />
         </div>
         <div
           className={`${clsx({
             "bg-black/10": loop,
           })} rounded-full h-7 w-7 flex items-center justify-center`}
         >
-          <BiRepeat onClick={() => setloop(!loop)} />
+          <BiRepeat
+            onClick={() => {
+              setloop(!loop);
+              dispatch(triggerShufferingMode(false));
+            }}
+          />
         </div>
       </div>
 

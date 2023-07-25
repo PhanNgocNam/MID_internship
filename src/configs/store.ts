@@ -4,6 +4,8 @@ import isPlayingSlice from "../features/currentTimeSlice";
 import activeSong from "../features/currentSongActiveSlice";
 import activePlayListSlice from "../features/playListActiveSlice";
 import { apiSlice } from "../features/apiSlice";
+import isShuffringMode from "../features/isShuffering";
+import windowSizeSlice from "../features/windowSizeSlice";
 
 const store = configureStore({
   reducer: {
@@ -11,6 +13,8 @@ const store = configureStore({
     currentTime: isPlayingSlice.reducer,
     activeSong: activeSong.reducer,
     activePlaylist: activePlayListSlice.reducer,
+    shufferingMode: isShuffringMode.reducer,
+    size: windowSizeSlice.reducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>

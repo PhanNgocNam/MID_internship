@@ -28,6 +28,7 @@ type SectionProps = {
 
 const Section: FC<SectionProps> = ({ title, items }) => {
   const navigate = useNavigate();
+
   return (
     <div className="p-2 text-white/90 mt-2">
       <h3 className="py-2 text-xl">{title}</h3>
@@ -36,12 +37,14 @@ const Section: FC<SectionProps> = ({ title, items }) => {
           const params = { list: playlist.encodeId };
           return (
             <SplideSlide
-              onClick={() =>
+              onClick={() => {
+                // hanlePreProcessingPlaylistInfoData(playlist);
+                console.log(playlist);
                 navigate({
                   pathname: "/playlist",
                   search: `${createSearchParams(params)}`,
-                })
-              }
+                });
+              }}
               key={playlist.encodeId}
             >
               <img

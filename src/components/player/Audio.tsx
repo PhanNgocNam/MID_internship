@@ -11,6 +11,7 @@ type AudioProps = {
   setPercent: (params: number) => void;
   setLoaded: (params: number) => void;
   setLoading: (params: boolean) => void;
+  handleNextSong: () => void;
   ref: ReactPlayerProps;
 };
 
@@ -23,7 +24,7 @@ const Audio = React.forwardRef<any, AudioProps>((props, forwardRef) => {
       url={`${props.currentSongURL}`}
       config={{ file: { forceAudio: true } }}
       playing={props.isPlaying}
-      // onEnded={() => handleNextSong()}
+      onEnded={() => props.handleNextSong()}
       loop={props.loop}
       volume={props.volume}
       // muted={true}

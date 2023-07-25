@@ -23,13 +23,15 @@ const SingleSong: FC<ISong> = (props) => {
       }}
     >
       <div
-        className="flex text-white/70 py-2 px-9 items-center border-t border-solid border-white/10"
+        className="flex justify-between text-white/70 py-2 px-9 items-center border-t border-solid border-white/10"
         key={props.encodeId}
       >
-        <img className="h-12 rounded-sm pr-2" src={props.thumbnail} />
-        <div className="pr-6">
-          <h1 className="text-lg one_line mb-1">{props.title}</h1>
-          <p className="text-white/40 text-xs">{props.artistsNames}</p>
+        <div className="flex items-center">
+          <img className="h-12 rounded-sm pr-2" src={props.thumbnail} />
+          <div className="pr-6">
+            <h1 className="text-lg one_line mb-1">{props.title}</h1>
+            <p className="text-white/40 text-xs">{props.artistsNames}</p>
+          </div>
         </div>
         <p>
           {Math.floor(props.duration / 60)}:{Math.floor(props.duration % 60)}

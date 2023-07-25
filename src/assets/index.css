@@ -63,6 +63,14 @@
   overflow: auto !important;
 } */
 
+.changeBg {
+  background: rgba(0, 0, 0, 1);
+}
+
+.none_scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 html,
 body,
 div,
@@ -191,8 +199,4 @@ table {
 html,
 body {
   height: 100%;
-}
-
-.changeBg {
-  background: rgba(0, 0, 0, 1);
 }

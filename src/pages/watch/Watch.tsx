@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../configs/store";
 import { useSearchParams } from "react-router-dom";
@@ -12,12 +12,15 @@ import type { TabsProps } from "antd";
 import SingleSong from "../../components/single_song/SingleSong";
 import { motion } from "framer-motion";
 import Lyric from "../../components/lyric/Lyric";
+import clsx from "clsx";
 
 const Watch: FC = () => {
   const [searchParams] = useSearchParams();
   const { data: playList } = useGetPlaylistInfoByIdQuery(
     searchParams.get("list")
   );
+  const activeRef = useRef<HTMLDivElement | null>(null);
+  const { activeSongId } = useSelector((state: RootState) => state.activeSong);
   const { data: song } = useGetSongInfoByIdQuery(searchParams.get("v"));
   const [playLists, setPlayLists] = useState<any>([]);
 
@@ -27,22 +30,31 @@ const Watch: FC = () => {
       label: `UP NEXT`,
       children: (
         <div className="overflow-y-scroll overflow-x-hidden h-[40vh]">
-          {playLists?.map((item: ISong, index: number, orignal: any) => (
-            <div key={item.encodeId}>
-              <SingleSong
-                artistsNames={item.artistsNames}
-                duration={item.duration}
-                encodeId={item.encodeId}
-                title={item.title}
-                releaseDate={item.releaseDate}
-                thumbnail={item.thumbnail}
-                thumbnailM={item.thumbnailM}
-                playlistId={playList?.data?.data?.encodeId}
-                nextSongId={orignal[index + 1]?.encodeId}
-                prevSongId={orignal[index - 1]?.encodeId}
-              />
-            </div>
-          ))}
+          {playLists?.map((item: ISong) => {
+            if (searchParams.get("v") === item.encodeId) {
+              activeRef.current?.scrollIntoView({ behavior: "smooth" });
+            }
+            return (
+              <div
+                key={item.encodeId}
+                ref={searchParams.get("v") === item.encodeId ? activeRef : null}
+                className={clsx({
+                  "bg-white/10": searchParams.get("v") === item.encodeId,
+                })}
+              >
+                <SingleSong
+                  artistsNames={item.artistsNames}
+                  duration={item.duration}
+                  encodeId={item.encodeId}
+                  title={item.title}
+                  releaseDate={item.releaseDate}
+                  thumbnail={item.thumbnail}
+                  thumbnailM={item.thumbnailM}
+                  playlistId={playList?.data?.data?.encodeId}
+                />
+              </div>
+            );
+          })}
         </div>
       ),
     },

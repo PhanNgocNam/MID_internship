@@ -1,4 +1,6 @@
+import { useSelector } from "react-redux";
 import { FC, useState } from "react";
+import { RootState } from "../../configs/store";
 import {
   ArrowLeftOutlined,
   CloseOutlined,
@@ -10,11 +12,15 @@ type SearchProps = {};
 const SearchBox: FC<SearchProps> = ({}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>("");
+  const { size } = useSelector((state: RootState) => state.size);
   return (
     <>
-      {isOpen ? (
-        <div className="w-[80%] bg-stone-600 fixed flex items-center px-2 border border-solid border-slate-200 rounded-md">
-          <ArrowLeftOutlined onClick={() => setIsOpen(false)} />
+      {size > 768 ? (
+        <div className="w-[80%] bg-stone-600/50 fixed flex items-center px-2 border border-solid border-slate-200 rounded-md md:relative md:w-[40%] md:border-white/20">
+          <ArrowLeftOutlined
+            className="md:hidden"
+            onClick={() => setIsOpen(false)}
+          />
           <input
             className="w-full bg-transparent p-2 outline-none "
             placeholder="Search..."

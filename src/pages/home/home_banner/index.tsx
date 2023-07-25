@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
-import { AutoScroll } from "@splidejs/splide-extension-auto-scroll";
 
 type HomeBannerProps = {
   type: number;
@@ -32,7 +31,7 @@ const data = [
 
 const HomeBanner: FC = () => {
   return (
-    <div className="pt-6 px-2">
+    <div className="pt-6 px-2 md:w-full md:px-10">
       <Splide
         options={{
           rewind: true,
@@ -42,18 +41,15 @@ const HomeBanner: FC = () => {
           perPage: 2,
           arrows: false,
           pagination: false,
-          autoScroll: {
-            pauseOnHover: true,
-            pauseOnFocus: false,
-            rewind: true,
-            speed: 0.8,
-          },
+          autoplay: true,
         }}
-        extensions={{ AutoScroll }}
       >
         {data.map((slideItem, index) => (
-          <SplideSlide key={index} className="p-3">
-            <img className="overflow-hidden rounded-md" src={slideItem.src} />
+          <SplideSlide key={index} className="p-3 md:max-w-[30%]">
+            <img
+              className="overflow-hidden rounded-md md:max-w-[100%] "
+              src={slideItem.src}
+            />
           </SplideSlide>
         ))}
       </Splide>

@@ -28,7 +28,7 @@ const Thumbnail: FC<ThumbnailProps> = ({ alt, size, src, onClick, songId }) => {
   }, [activeSongId]);
 
   return (
-    <div className="relative">
+    <div className="relative cursor-pointer">
       <Avatar
         onClick={onClick}
         alt={alt}
