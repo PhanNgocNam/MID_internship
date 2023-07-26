@@ -41,40 +41,51 @@ const NewRelease: FC<INewRelease> = ({ items, title }) => {
   }, [switchData]);
 
   return (
-    <div className="new_release p-2 text-white/80 h-[300px] overflow-auto border-solid border border-white/10 md:px-10 md:border-0 md:h-fit">
+    <div className="new_release p-2 text-white/80 overflow-auto border-solid border border-white/10 md:px-10 md:border-0 h-fit">
       <h3 className="py-2 text-xl md:text-2xl">{title}</h3>
       <div className="flex justify-between items-center">
-        <div className="w-[80%] py-2">
-          {data.map((item) => (
-            <button className="border border-solid border-white/10 px-4 py-1 mr-2 rounded-full">
+        <div className="w-[85%] py-2 flex">
+          {data.map((item, index) => (
+            <button
+              key={index}
+              onClick={() => setSwitchData(item.payload)}
+              className={`break-normal border border-solid border-white/10 px-4 py-1 mr-2 rounded-full ${clsx(
+                {
+                  "bg-gradient-to-r from-pink-500/50 via-black-500/40 to-black":
+                    JSON.stringify(switchData) === JSON.stringify(item.payload),
+                }
+              )}`}
+            >
               {item.label}
             </button>
           ))}
         </div>
-        <div className="w-[20%] text-right">
+        <div className="w-[15%] text-right">
           <button>Tất cả </button>
         </div>
       </div>
-      <div className="md:grid md:grid-cols-3 md:grid-rows-3 gap-4 lg:grid-cols-4">
-        {newReleaseData.slice(0, 15).map((song: any) => (
-          <div
-            key={song.encodeId}
-            className={`flex justify-between items-center border-t border-solid border-white/10 py-2 ${clsx(
-              { ["bg-gray-50/10"]: activeSongId.activeSongId === song.encodeId }
-            )} md:px-2 md:border md:border-solid md:border-white/10 md:rounded-s`}
-          >
-            <Thumbnail
-              songId={song.encodeId}
-              alt={song.title}
-              size={50}
-              src={song.thumbnailM}
-            />
-            <div className="flex flex-col text-right text-white md:text-right ">
-              <h2 className="py-1">{song.title}</h2>
-              <h4 className="text-white/50 text-xs">{song.artistsNames}</h4>
+      <div className="w-full overflow-x-auto">
+        <div className="w-[180%] grid grid-cols-3 grid-rows-3 gap-4 lg:grid-cols-4 md:w-full ">
+          {newReleaseData.slice(0, 12).map((song: any) => (
+            <div
+              key={song.encodeId}
+              className={`flex justify-between items-center py-2 ${clsx({
+                ["bg-gray-50/10"]: activeSongId.activeSongId === song.encodeId,
+              })} px-2 border border-solid border-white/10 rounded-s`}
+            >
+              <Thumbnail
+                songId={song.encodeId}
+                alt={song.title}
+                size={50}
+                src={song.thumbnailM}
+              />
+              <div className="flex flex-col text-right text-white md:text-right ">
+                <h2 className="py-1">{song.title}</h2>
+                <h4 className="text-white/50 text-xs">{song.artistsNames}</h4>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

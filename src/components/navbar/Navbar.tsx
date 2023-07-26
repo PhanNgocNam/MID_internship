@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../configs/store";
 import LogoutPopup from "./LogoutPopup";
 import LangsComboBox from "./LangsComboBox";
+import DesktopLogo from "../../assets/img/on_platform_logo_dark.svg";
 
 interface INavbar {
   isChangeBackgroundHeader: boolean;
@@ -25,6 +26,7 @@ const Navbar: FC<INavbar> = ({ isChangeBackgroundHeader }) => {
   const [isLogout, setIsLogout] = useState<boolean>(true);
 
   const { status } = useSelector((state: RootState) => state.user);
+  const { size } = useSelector((state: RootState) => state.size);
 
   useEffect(() => {
     if (!status) {
@@ -44,15 +46,19 @@ const Navbar: FC<INavbar> = ({ isChangeBackgroundHeader }) => {
         }
       )}`}
     >
-      <Logo alt="Logo" src={logo_on_phone} size={26} shape="circle" />
+      {size >= 768 ? (
+        <img alt="" src={DesktopLogo} />
+      ) : (
+        <Logo alt="Logo" src={logo_on_phone} size={26} shape="circle" />
+      )}
       {status ? (
         <>
-          <div className="flex w-[60%] items-center justify-evenly ">
+          <div className="flex w-[60%] items-center justify-evenly">
             {data.map((menuItem, index) => {
               return (
                 <div
                   key={index}
-                  className="cursor-pointer"
+                  className="cursor-pointer  md:hidden"
                   onClick={() => navigate(menuItem.path)}
                 >
                   <menuItem.icon className="text-xl text-white/80 md:hidden" />
