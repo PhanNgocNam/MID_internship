@@ -131,9 +131,11 @@ const Player: FC = () => {
           }}
           style={{ margin: 0 }}
           trackStyle={{
+            height: "2px",
             background: "red",
           }}
           railStyle={{
+            height: "2px",
             background: "gray",
             width: `${loaded}%`,
           }}
@@ -167,7 +169,7 @@ const Player: FC = () => {
         <BiSkipNext size={30} onClick={handleNextSong} />
       </div>
 
-      <div className="flex grow items-center justify-around">
+      <div className="flex items-center grow justify-around md:w-[40%] md:grow-0 lg:grow-0 lg:w-[20%]">
         <div>
           <Slider
             style={{ width: "80px" }}

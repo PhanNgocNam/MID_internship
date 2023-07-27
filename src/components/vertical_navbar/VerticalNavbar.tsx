@@ -24,7 +24,7 @@ const VerticalNavbar: FC = (props: Props) => {
             size={50}
             className="text-xl text-white/80 flex items-center"
           />
-          <span className="md:block ml-2">{menuItem.label}</span>
+          <span className="md:block ml-8 md:text-lg">{menuItem.label}</span>
         </div>
       ))}
     </div>

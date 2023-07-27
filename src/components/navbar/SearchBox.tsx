@@ -1,45 +1,115 @@
 import { useSelector } from "react-redux";
-import { FC, useEffect, useState } from "react";
+import { FC, KeyboardEventHandler, useEffect, useRef, useState } from "react";
 import { RootState } from "../../configs/store";
 import {
   ArrowLeftOutlined,
   CloseOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { AutoComplete, theme } from "antd";
-const { useToken } = theme;
+import useDebounce from "../../hooks/useDebounce";
+import useToggle from "../../hooks/useToggle";
+import { useGetSearchDataQuery } from "../../features/apiSlice";
+import { get } from "../../utils/request";
+import apiInstance from "../../configs/api";
+import { Avatar } from "antd";
 
 type SearchProps = {};
 
+interface ISearchSong {
+  encodeId: string;
+  title: string;
+  thumbnail: string;
+  thumbnailM: string;
+  artistsNames: string;
+  duration: number;
+}
+
 const SearchBox: FC<SearchProps> = ({}) => {
-  const { token } = useToken();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [value, toggleValue] = useToggle(false);
   const [searchInput, setSearchInput] = useState<string>("");
+  const searchFocusRef = useRef<HTMLDivElement | null>(null);
+  const [focusFlag, setFocusFlag] = useState<number>(0);
+
+  const [searchData, setSearchData] = useState<any>({});
+  useDebounce(
+    async () => {
+      if (!searchInput) return;
+      const res = await get(`${apiInstance.SEARCH_API}?id=${searchInput}`);
+      if (!res.result) return;
+      setSearchData(res?.data?.data);
+    },
+    1000,
+    searchInput
+  );
+
+  // console.log(searchData);
+
   const { size } = useSelector((state: RootState) => state.size);
   useEffect(() => {
     if (size >= 768) {
-      setIsOpen(true);
+      toggleValue(true);
     } else {
-      setIsOpen(false);
+      toggleValue(false);
     }
   }, [size]);
+
+  const handleFocusWhenPressKeyDown = (
+    e: React.KeyboardEvent<HTMLDivElement>
+  ) => {
+    if (e.key === "ArrowDown" && focusFlag < 2 && focusFlag >= 0) {
+      e.preventDefault();
+
+      setFocusFlag(focusFlag + 1);
+    } else if (e.key === "ArrowUp" && focusFlag <= 2 && focusFlag > 0) {
+      e.preventDefault();
+      setFocusFlag(focusFlag - 1);
+    }
+    searchFocusRef.current?.focus();
+  };
+  console.log(searchData);
   return (
     <>
-      {isOpen ? (
+      {value ? (
         <div className="w-[80%] bg-stone-600 fixed flex items-center px-2 border border-solid border-slate-200 rounded-md md:relative md:border-white/20 md:bg-stone-600/50  md:max-w-[60%]">
           <ArrowLeftOutlined
             className="md:hidden"
-            onClick={() => setIsOpen(false)}
+            onClick={() => toggleValue(false)}
           />
           <input
             className="w-full bg-transparent p-2 outline-none"
             placeholder="Search song, albums, artists, podcasts..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "ArrowDown") {
+                searchFocusRef.current?.focus();
+              }
+            }}
           />
           {searchInput ? (
-            <div className="w-full h-44 absolute top-[34px] left-0 bottom-0 bg-black">
-              adasd
+            <div className="w-full h-fit absolute top-[36px] left-0 bottom-0 bg-black rounded-sm">
+              {searchData?.songs
+                ?.slice(0, 3)
+                ?.map((song: ISearchSong, index: number) => (
+                  <div
+                    tabIndex={1}
+                    ref={index === focusFlag ? searchFocusRef : null}
+                    onKeyDown={(e) => handleFocusWhenPressKeyDown(e)}
+                    className="flex p-1 my-2 outline-none active:bg-white/10 focus:bg-white/20 hover:bg-white/10"
+                  >
+                    <Avatar
+                      alt=""
+                      src={song.thumbnail}
+                      size={50}
+                      shape="square"
+                    />
+                    <div className="flex justify-center flex-col pl-4 grow">
+                      <h2 className="text-[16px] py-1">{song.title}</h2>
+                      <p className="text-xs">{song.artistsNames}</p>
+                      {/* <p>{song.objectType}</p> */}
+                    </div>
+                  </div>
+                ))}
             </div>
           ) : (
             ""
@@ -54,7 +124,7 @@ const SearchBox: FC<SearchProps> = ({}) => {
       ) : (
         <SearchOutlined
           className="text-xl font-thin"
-          onClick={() => setIsOpen(true)}
+          onClick={() => toggleValue(true)}
         />
       )}
     </>

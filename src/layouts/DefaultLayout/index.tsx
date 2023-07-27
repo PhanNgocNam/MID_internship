@@ -15,11 +15,11 @@ const DefaultLayout: FC<IProps> = ({ children }) => {
   const [isChangeBackgroundHeader, setIsChangeBackgroundHeader] =
     useState<boolean>(false);
 
+  window.addEventListener("scroll", handleChangeBg);
   useEffect(() => {
     window.addEventListener("resize", () =>
       dispatch(resizeWindow(window.innerWidth))
     );
-    window.addEventListener("scroll", handleChangeBg);
     return () => {
       window.removeEventListener("resize", () =>
         dispatch(resizeWindow(window.innerWidth))
@@ -41,11 +41,11 @@ const DefaultLayout: FC<IProps> = ({ children }) => {
   }
 
   return (
-    <div className="h-full relative overflow-hidden">
-      <div className="hidden w-[15%] float-left fixed top-0 bottom-0 left-0 pt-[64px] border-r border-solid border-white/10 bg-black md:block">
+    <div className="h-screen relative overflow-hidden">
+      <div className="hidden w-[20%] float-left fixed top-0 bottom-0 left-0 pt-[64px] border-r border-solid border-white/10 bg-black md:block">
         <VerticalNavbar />
       </div>
-      <div className="bg-black none_scrollbar md:w-[85%] float-right w-full">
+      <div className="bg-black none_scrollbar md:w-[80%] float-right w-full h-full">
         <Navbar isChangeBackgroundHeader={isChangeBackgroundHeader} />
         {children}
         {activeSongId ? <Player /> : ""}

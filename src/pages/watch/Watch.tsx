@@ -29,7 +29,7 @@ const Watch: FC = () => {
       key: "1",
       label: `UP NEXT`,
       children: (
-        <div className="overflow-y-scroll overflow-x-hidden h-[40vh]">
+        <div className="overflow-y-scroll overflow-x-hidden h-[40vh] md:h-[70vh]">
           {playLists?.map((item: ISong) => {
             if (searchParams.get("v") === item.encodeId) {
               activeRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -77,7 +77,7 @@ const Watch: FC = () => {
       animate={{ y: 0 }}
       exit={{ y: "100%", opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="h-full bg-black pt-[64px] p-2"
+      className="h-full bg-black pt-[64px] p-2 md:flex md:justify-center md:items-center"
     >
       <motion.div
         initial={{ opacity: 0, x: "60%", y: "60%", scale: 0.6 }}
@@ -85,7 +85,7 @@ const Watch: FC = () => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
         style={{ backgroundImage: `url(${song?.data?.data?.thumbnailM})` }}
-        className="relative max-h-[40vh] bg-cover rounded-sm h-[40vh] flex items-center justify-center"
+        className="relative max-h-[40vh] bg-cover rounded-sm h-[40vh] flex items-center justify-center  md:max-h-[60vh] md:h-[60vh] md:mr-10 md:w-[50%] "
       >
         <div className="fixed top-0 left-0 right-0 bottom-0 bg-black/80" />
         <motion.img
@@ -96,7 +96,7 @@ const Watch: FC = () => {
           alt={""}
         />
       </motion.div>
-      <div className="h-[41vh]">
+      <div className="h-[41vh] md:w-1/3 md:h-full pt-4 pr-4">
         <Tabs defaultActiveKey="1" items={items} centered />
       </div>
     </motion.div>

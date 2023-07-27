@@ -23,7 +23,7 @@ interface INavbar {
 const Navbar: FC<INavbar> = ({ isChangeBackgroundHeader }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [isLogout, setIsLogout] = useState<boolean>(true);
+  const [isLogout, setIsLogout] = useState<boolean>(false);
 
   const { status } = useSelector((state: RootState) => state.user);
   const { size } = useSelector((state: RootState) => state.size);

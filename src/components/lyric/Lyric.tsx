@@ -41,7 +41,7 @@ export default function Lyric({}: Props) {
 
   // console.log(lyricData[0]);
   return (
-    <div className="text-white h-[40vh] overflow-x-hidden overflow-y-scroll relative">
+    <div className="text-white h-[40vh] overflow-x-hidden overflow-y-scroll relative md:h-[70vh]">
       <div className="pb-36">
         {lyricData?.map((l: ILyric, index: number, original: any) => {
           if (time > l.startTime && time < l.endTime) {
@@ -51,9 +51,9 @@ export default function Lyric({}: Props) {
             <p
               ref={time > l.startTime && time < l.endTime ? lyricRef : null}
               key={l.startTime}
-              className={`text-center py-2 ${clsx({
+              className={`py-2 ${clsx({
                 ["s"]: time >= l.startTime && time <= l.endTime + 10,
-              })}`}
+              })} md:text-left`}
             >
               {l.lyric}
             </p>
