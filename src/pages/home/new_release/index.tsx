@@ -49,7 +49,7 @@ const NewRelease: FC<INewRelease> = ({ items, title }) => {
             <button
               key={index}
               onClick={() => setSwitchData(item.payload)}
-              className={`break-normal border border-solid border-white/10 px-4 py-1 mr-2 rounded-full ${clsx(
+              className={`break-normal text-xs border border-solid border-white/10 px-4 py-1 mr-2 rounded-full ${clsx(
                 {
                   "bg-gradient-to-r from-pink-500/50 via-black-500/40 to-black":
                     JSON.stringify(switchData) === JSON.stringify(item.payload),
@@ -60,7 +60,7 @@ const NewRelease: FC<INewRelease> = ({ items, title }) => {
             </button>
           ))}
         </div>
-        <div className="w-[15%] text-right">
+        <div className="w-[15%] text-right text-xs">
           <button>Tất cả </button>
         </div>
       </div>
@@ -79,7 +79,7 @@ const NewRelease: FC<INewRelease> = ({ items, title }) => {
                 size={50}
                 src={song.thumbnailM}
               />
-              <div className="flex flex-col text-right text-white md:text-right ">
+              <div className="flex flex-col text-sm text-right text-white md:text-right ">
                 <h2 className="py-1">{song.title}</h2>
                 <h4 className="text-white/50 text-xs">{song.artistsNames}</h4>
               </div>

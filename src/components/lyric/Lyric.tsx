@@ -39,11 +39,10 @@ export default function Lyric({}: Props) {
     }
   );
 
-  // console.log(lyricData[0]);
   return (
-    <div className="text-white h-[40vh] overflow-x-hidden overflow-y-scroll relative md:h-[70vh]">
-      <div className="pb-36">
-        {lyricData?.map((l: ILyric, index: number, original: any) => {
+    <div className="h-[30vh] overflow-y-scroll md:h-[70vh] lyric_container">
+      <div className="h-fit">
+        {lyricData?.map((l: ILyric) => {
           if (time > l.startTime && time < l.endTime) {
             lyricRef.current?.scrollIntoView({ behavior: "smooth" });
           }
@@ -52,7 +51,7 @@ export default function Lyric({}: Props) {
               ref={time > l.startTime && time < l.endTime ? lyricRef : null}
               key={l.startTime}
               className={`py-2 ${clsx({
-                ["s"]: time >= l.startTime && time <= l.endTime + 10,
+                ["s"]: time >= l.startTime && time <= l.endTime + 1,
               })} md:text-left`}
             >
               {l.lyric}

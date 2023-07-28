@@ -19,7 +19,7 @@ const Home: FC = () => {
 
   // console.log(homeData);
   return (
-    <div className="bg-black min-h-[100vh] ">
+    <div className="bg-black h-fit min-h-[100vh]">
       <Categories />
       <HomeBanner />
       {homeData.length ? (

@@ -71,6 +71,38 @@
   display: none;
 }
 
+.lyric_container:hover::-webkit-scrollbar {
+  display: block;
+}
+
+.upnext_container::-webkit-scrollbar,
+.lyric_container::-webkit-scrollbar {
+  width: 10px;
+  display: none;
+}
+
+/* Track */
+
+.lyric_container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+
+.lyric_container::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+
+.lyric_container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.listsong_palaylist_container {
+  scrollbar-gutter: stable;
+}
+
 html,
 body,
 div,

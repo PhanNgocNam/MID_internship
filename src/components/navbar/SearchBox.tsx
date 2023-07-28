@@ -56,17 +56,19 @@ const SearchBox: FC<SearchProps> = ({}) => {
   const handleFocusWhenPressKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>
   ) => {
-    if (e.key === "ArrowDown" && focusFlag < 2 && focusFlag >= 0) {
+    const cou = 0;
+    if (e.key === "ArrowDown") {
       e.preventDefault();
-
-      setFocusFlag(focusFlag + 1);
-    } else if (e.key === "ArrowUp" && focusFlag <= 2 && focusFlag > 0) {
+      setFocusFlag((focusFlag) => (focusFlag + 1) % 3);
+    } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      setFocusFlag(focusFlag - 1);
+      setFocusFlag((focusFlag) => (focusFlag - 1) % 3);
     }
-    searchFocusRef.current?.focus();
   };
-  console.log(searchData);
+
+  useEffect(() => {
+    searchFocusRef.current?.focus();
+  }, [focusFlag]);
   return (
     <>
       {value ? (

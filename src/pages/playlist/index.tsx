@@ -76,15 +76,18 @@ const Playlist: FC = () => {
   }, [playListInfo]);
 
   return (
-    <div className="bg-black h-[100vh] px-2 text-white/80 overflow-hidden">
+    <div className="bg-black h-[100vh] px-2 text-white/80 overflow-hidden md:p-10 lg:p-16">
       {playlist ? (
         <>
           <div
             // onClick={() => hanlePreProcessingPlaylistInfoData(playlist)}
-            className="mt-[64px] h-fit py-3  flex justify-between items-center"
+            className="mt-[64px] h-fit py-3  flex justify-between items-center md:justify-start md:mt-6"
           >
-            <img src={playlist.thumbnailM} className="h-[160px] rounded-md" />
-            <div className="ml-2 flex items-start flex-col">
+            <img
+              src={playlist.thumbnailM}
+              className="h-[160px] rounded-md md:h-60"
+            />
+            <div className="ml-2 flex items-start flex-col md:pl-8">
               <h1 className="text-lg">{playlist.title}</h1>
               <p className="text-white/60 text-sm py-[2px]">
                 Cập nhật:{" "}
@@ -101,17 +104,28 @@ const Playlist: FC = () => {
               <p className="text-white/60 text-sm py-[2px]">
                 {Math.floor(playlist.like / 1000)}k yêu thích
               </p>
+
+              <div className="pt-3 hidden md:block">
+                <button className="p-2 border border-solid border-white/80 rounded-full mr-2">
+                  Shuffer
+                </button>
+                <button className="p-2 border border-solid border-white/80 rounded-full">
+                  Save to library
+                </button>
+              </div>
             </div>
           </div>
-          <button
-            // onClick={() => hanlePreProcessingPlaylistInfoData(playlist)}
-            className="flex items-center p-2 justify-between w-fit border border-solid border-white/40  rounded-full text-black bg-white/70 mb-3  "
-          >
-            <Suffle width={20} height={20} /> Phát ngẫu nhiên
-          </button>
+          <div className="pb-2 md:hidden">
+            <button className="py-1 px-2 border border-solid border-white/80 rounded-full mr-2 text-sm">
+              Shuffer
+            </button>
+            <button className="py-1 px-2 border border-solid border-white/80 rounded-full text-sm">
+              Save to library
+            </button>
+          </div>
           <div
             // onClick={() => hanlePreProcessingPlaylistInfoData(playlist)}
-            className="text-white/70 overflow-y-auto pb-40 h-[70%]"
+            className="text-white/70 overflow-y-auto pb-40 h-[70%] none_scrollbar listsong_palaylist_container"
           >
             {playlist.song.items.map((song) => (
               <SingleSong
