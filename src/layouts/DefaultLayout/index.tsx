@@ -15,8 +15,8 @@ const DefaultLayout: FC<IProps> = ({ children }) => {
   const [isChangeBackgroundHeader, setIsChangeBackgroundHeader] =
     useState<boolean>(false);
 
+  window.addEventListener("scroll", handleChangeBg);
   useEffect(() => {
-    window.addEventListener("scroll", handleChangeBg);
     window.addEventListener("resize", () =>
       dispatch(resizeWindow(window.innerWidth))
     );
@@ -24,7 +24,6 @@ const DefaultLayout: FC<IProps> = ({ children }) => {
       window.removeEventListener("resize", () =>
         dispatch(resizeWindow(window.innerWidth))
       );
-      window.removeEventListener("scroll", handleChangeBg);
     };
   }, [window]);
 
