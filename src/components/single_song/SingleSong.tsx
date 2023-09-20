@@ -1,29 +1,24 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import { ISong } from "../../pages/playlist";
-import { useNavigate, createSearchParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { triggerPlayASingleSong } from "../../features/currentSongActiveSlice";
+import { createSearchParams } from "react-router-dom";
+import { navigateToWatch } from "../../utils/navigateToWatchRoute";
+import { triggerPlayASong } from "../../utils/triggerPlayASong";
+
 const SingleSong: FC<ISong> = (props) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const params = { v: props.encodeId, list: props.playlistId };
 
   return (
     <div
       onClick={() => {
-        navigate({
+        navigateToWatch({
           pathname: "/watch",
           search: `${createSearchParams(params)}`,
         });
-        dispatch(
-          triggerPlayASingleSong({
-            activeSongId: props.encodeId,
-          })
-        );
+        triggerPlayASong(props.encodeId);
       }}
     >
       <div
-        className="flex justify-between text-white/70 py-2 items-center border-t border-solid border-white/10 md:px-2"
+        className="flex justify-between text-white/70 py-2 items-center border-t border-solid border-white/10 md:px-2 cursor-pointer"
         key={props.encodeId}
       >
         <div className="flex items-center">

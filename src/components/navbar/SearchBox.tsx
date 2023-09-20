@@ -8,10 +8,17 @@ import {
 } from "@ant-design/icons";
 import useDebounce from "../../hooks/useDebounce";
 import useToggle from "../../hooks/useToggle";
-import { useGetSearchDataQuery } from "../../features/apiSlice";
+import {
+  useGetPlaylistInfoByIdQuery,
+  useGetSearchDataQuery,
+} from "../../features/apiSlice";
 import { get } from "../../utils/request";
 import apiInstance from "../../configs/api";
 import { Avatar } from "antd";
+import { triggerPlayASong } from "../../utils/triggerPlayASong";
+import { navigateToWatch } from "../../utils/navigateToWatchRoute";
+import { createSearchParams, useSearchParams } from "react-router-dom";
+import { handlePreProcessingPlaylistInfoData } from "../../utils/handlePreProcessingPlaylistInfoData";
 
 type SearchProps = {};
 
@@ -56,7 +63,6 @@ const SearchBox: FC<SearchProps> = ({}) => {
   const handleFocusWhenPressKeyDown = (
     e: React.KeyboardEvent<HTMLDivElement>
   ) => {
-    const cou = 0;
     if (e.key === "ArrowDown") {
       e.preventDefault();
       setFocusFlag((focusFlag) => (focusFlag + 1) % 3);
@@ -69,6 +75,7 @@ const SearchBox: FC<SearchProps> = ({}) => {
   useEffect(() => {
     searchFocusRef.current?.focus();
   }, [focusFlag]);
+
   return (
     <>
       {value ? (
@@ -97,6 +104,23 @@ const SearchBox: FC<SearchProps> = ({}) => {
                     tabIndex={1}
                     ref={index === focusFlag ? searchFocusRef : null}
                     onKeyDown={(e) => handleFocusWhenPressKeyDown(e)}
+                    onClick={async () => {
+                      triggerPlayASong(song.encodeId);
+                      navigateToWatch({
+                        pathname: "/watch",
+                        search: `${createSearchParams({
+                          v: song.encodeId,
+                          list: searchData?.playlists[0]?.encodeId,
+                        })}`,
+                      });
+                      const playlistData = await get(
+                        `${apiInstance.PLAYLIST_INFO_API}?id=${searchData?.playlists[0]?.encodeId}`
+                      );
+                      handlePreProcessingPlaylistInfoData(
+                        playlistData?.data?.data
+                      );
+                      setSearchInput("");
+                    }}
                     className="flex p-1 my-2 outline-none active:bg-white/10 focus:bg-white/20 hover:bg-white/10"
                   >
                     <Avatar
@@ -108,7 +132,6 @@ const SearchBox: FC<SearchProps> = ({}) => {
                     <div className="flex justify-center flex-col pl-4 grow">
                       <h2 className="text-[16px] py-1">{song.title}</h2>
                       <p className="text-xs">{song.artistsNames}</p>
-                      {/* <p>{song.objectType}</p> */}
                     </div>
                   </div>
                 ))}
@@ -116,7 +139,7 @@ const SearchBox: FC<SearchProps> = ({}) => {
           ) : (
             ""
           )}
-          {/* <AutoComplete style={{ width: "100%" }} /> */}
+
           {searchInput ? (
             <CloseOutlined onClick={() => setSearchInput("")} />
           ) : (

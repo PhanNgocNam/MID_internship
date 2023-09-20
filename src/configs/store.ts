@@ -6,6 +6,7 @@ import activePlayListSlice from "../features/playListActiveSlice";
 import { apiSlice } from "../features/apiSlice";
 import isShuffringMode from "../features/isShuffering";
 import windowSizeSlice from "../features/windowSizeSlice";
+import isPlayingFlagSlice from "../features/isPlayingFlagSlice";
 
 const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ const store = configureStore({
     activePlaylist: activePlayListSlice.reducer,
     shufferingMode: isShuffringMode.reducer,
     size: windowSizeSlice.reducer,
+    ready: isPlayingFlagSlice.reducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>

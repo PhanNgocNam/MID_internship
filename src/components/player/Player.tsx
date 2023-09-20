@@ -12,6 +12,7 @@ import { dispatchCurrenttime } from "../../features/currentTimeSlice";
 import { Slider } from "antd";
 import clsx from "clsx";
 import Audio from "./Audio";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import {
   BiSkipNext,
   BiSkipPrevious,
@@ -59,18 +60,28 @@ const Player: FC = () => {
     const index: number = playlistIsActive.findIndex(
       (song: string) => song === activeSongId
     );
-    index + 1 &&
-      navigate({
-        pathname: "/watch",
-        search: `?v=${playlistIsActive[index + 1]}&list=${searchParams.get(
-          "list"
-        )}`,
-      });
-    dispatch(
-      triggerPlayASingleSong({
-        activeSongId: playlistIsActive[index + 1],
-      })
-    );
+    index + 1
+      ? navigate({
+          pathname: "/watch",
+          search: `?v=${playlistIsActive[index + 1]}&list=${searchParams.get(
+            "list"
+          )}`,
+        })
+      : navigate({
+          pathname: "/watch",
+          search: `?v=${playlistIsActive[0]}&list=${searchParams.get("list")}`,
+        });
+    index + 1
+      ? dispatch(
+          triggerPlayASingleSong({
+            activeSongId: playlistIsActive[index + 1],
+          })
+        )
+      : dispatch(
+          triggerPlayASingleSong({
+            activeSongId: playlistIsActive[0],
+          })
+        );
   };
   const handlePrevSong = () => {
     const index: number = playlistIsActive.findIndex(
@@ -145,7 +156,7 @@ const Player: FC = () => {
       <div className=" flex items-center justify-center">
         <BiSkipPrevious size={30} onClick={handlePrevSong} />
         {loading ? (
-          <Spin />
+          <AiOutlineLoading3Quarters className="animate-spin" />
         ) : (
           <>
             {isPlaying ? (
@@ -177,7 +188,7 @@ const Player: FC = () => {
             onChange={(e) => setVolume(e / 100)}
           />
         </div>
-        <div>
+        <div className="cursor-pointer">
           <BiVolumeFull />
         </div>
         <div
@@ -186,6 +197,7 @@ const Player: FC = () => {
           })} rounded-full h-7 w-7 flex items-center justify-center`}
         >
           <BiShuffle
+            className="cursor-pointer"
             onClick={() => {
               dispatch(triggerShufferingMode(!isShuffringMode));
               setloop(false);
@@ -198,6 +210,7 @@ const Player: FC = () => {
           })} rounded-full h-7 w-7 flex items-center justify-center`}
         >
           <BiRepeat
+            className="cursor-pointer"
             onClick={() => {
               setloop(!loop);
               dispatch(triggerShufferingMode(false));

@@ -8,7 +8,7 @@ import SingleSong from "../../components/single_song/SingleSong";
 import { motion } from "framer-motion";
 import { useGetPlaylistInfoByIdQuery } from "../../features/apiSlice";
 import { useDispatch } from "react-redux";
-import { dispatchCurrentPlaylist } from "../../features/playListActiveSlice";
+import { handlePreProcessingPlaylistInfoData } from "../../utils/handlePreProcessingPlaylistInfoData";
 
 export interface ISong {
   artistsNames: string;
@@ -39,7 +39,7 @@ export type playlistType = {
 
 const Playlist: FC = () => {
   const [searchParams] = useSearchParams();
-  const dispatch = useDispatch();
+
   const [playlist, setPlaylist] = useState<playlistType>({
     encodeId: "",
     artistsNames: "",
@@ -58,16 +58,10 @@ const Playlist: FC = () => {
   const { data: playListInfo } = useGetPlaylistInfoByIdQuery(
     searchParams.get("list")
   );
-  const hanlePreProcessingPlaylistInfoData = (playLists: any) => {
-    const activePlaylist = playLists?.song?.items.map(
-      (song: any) => song.encodeId
-    );
-    activePlaylist && dispatch(dispatchCurrentPlaylist([...activePlaylist]));
-  };
 
   useEffect(() => {
     if (playlist) {
-      hanlePreProcessingPlaylistInfoData(playlist);
+      handlePreProcessingPlaylistInfoData(playlist);
     }
   }, [searchParams.get("list"), playlist]);
 
@@ -79,10 +73,7 @@ const Playlist: FC = () => {
     <div className="bg-black h-[100vh] px-2 text-white/80 overflow-hidden md:p-10 lg:p-16">
       {playlist ? (
         <>
-          <div
-            // onClick={() => hanlePreProcessingPlaylistInfoData(playlist)}
-            className="mt-[64px] h-fit py-3  flex justify-between items-center md:justify-start md:mt-6"
-          >
+          <div className="mt-[64px] h-fit py-3  flex justify-between items-center md:justify-start md:mt-6">
             <img
               src={playlist.thumbnailM}
               className="h-[160px] rounded-md md:h-60"
@@ -123,10 +114,7 @@ const Playlist: FC = () => {
               Save to library
             </button>
           </div>
-          <div
-            // onClick={() => hanlePreProcessingPlaylistInfoData(playlist)}
-            className="text-white/70 overflow-y-auto pb-40 h-[70%] none_scrollbar listsong_palaylist_container"
-          >
+          <div className="text-white/70 overflow-y-auto pb-40 h-[70%] none_scrollbar listsong_palaylist_container">
             {playlist.song.items.map((song) => (
               <SingleSong
                 artistsNames={song.artistsNames}

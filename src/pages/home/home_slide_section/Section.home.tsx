@@ -46,6 +46,7 @@ const Section: FC<SectionProps> = ({ title, items }) => {
           const params = { list: playlist.encodeId };
           return (
             <SplideSlide
+              className="cursor-pointer"
               onClick={() => {
                 navigate({
                   pathname: "/playlist",

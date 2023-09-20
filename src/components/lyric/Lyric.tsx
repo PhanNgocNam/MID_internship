@@ -1,8 +1,7 @@
-import React, { useRef, useState } from "react";
+import { useRef } from "react";
 import { useGetLyricByIdQuery } from "../../features/apiSlice";
 import { useSelector } from "react-redux";
 import { RootState } from "../../configs/store";
-import { motion } from "framer-motion";
 import clsx from "clsx";
 
 type Props = {};

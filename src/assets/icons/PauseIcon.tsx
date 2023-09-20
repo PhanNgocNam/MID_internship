@@ -10,7 +10,7 @@ const PauseIcon: FC<IconProps> = ({ width, height, onClick, color }) => {
       width={width}
       height={height}
       fill={color}
-      className="bi bi-pause"
+      className="bi bi-pause cursor-pointer"
       viewBox="0 0 16 16"
     >
       <path d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5zm4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z" />

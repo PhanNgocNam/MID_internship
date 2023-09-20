@@ -17,23 +17,23 @@ const Home: FC = () => {
     }
   }, [HomePageData]);
 
-  // console.log(homeData);
   return (
-    <div className="bg-black h-fit min-h-[100vh]">
+    <div className="bg-black h-fit min-h-[100dvh]">
       <Categories />
       <HomeBanner />
+
       {homeData.length ? (
         <>
           <NewRelease
-            items={homeData[2].items}
-            sectionType={homeData[2].sectionType}
-            title={homeData[2].title}
-            link={homeData[2].link}
+            items={homeData[3].items}
+            sectionType={homeData[3].sectionType}
+            title={homeData[3].title}
+            link={homeData[3].link}
           />
-          {homeData.slice(3, 9)?.map((sec, index) => (
+          {homeData.slice(4, 9)?.map((sec, index) => (
             <Section title={sec.title} items={sec.items} key={index} />
           ))}
-          {/* <Section title={homeData[3].title} items={homeData[3].items} /> */}
+          {/* <Section title={homeData[3].title} items={homeData[3].items.all} /> */}
         </>
       ) : (
         <div className="min-h-[100px] flex items-center justify-center">

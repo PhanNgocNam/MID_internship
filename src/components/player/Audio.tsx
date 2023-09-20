@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import ReactPlayer, { ReactPlayerProps } from "react-player";
 import { useDispatch } from "react-redux";
 import { dispatchCurrenttime } from "../../features/currentTimeSlice";
+import { triggerReadySatate } from "../../features/isPlayingFlagSlice";
 
 type AudioProps = {
   currentSongURL: string;
@@ -27,8 +28,15 @@ const Audio = React.forwardRef<any, AudioProps>((props, forwardRef) => {
       onEnded={() => props.handleNextSong()}
       loop={props.loop}
       volume={props.volume}
+      // onPause={() => dispatch(triggerReadySatate(false))}
+      onPlay={() => dispatch(triggerReadySatate(true))}
+      // onStart={() => dispatch(triggerReadySatate(false))}
       // muted={true}
-      onReady={() => props.setLoading(false)}
+      onReady={(e) => {
+        props.setLoading(false);
+        dispatch(triggerReadySatate(true));
+        console.log(e);
+      }}
       onProgress={(e) => {
         dispatch(dispatchCurrenttime(e.playedSeconds * 1000));
         props.setPercent(e.played * 100);

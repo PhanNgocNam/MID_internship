@@ -51,9 +51,12 @@ const Navbar: FC<INavbar> = ({ isChangeBackgroundHeader }) => {
       ) : (
         <Logo alt="Logo" src={logo_on_phone} size={26} shape="circle" />
       )}
+      <div className="w-[60%] flex justify-center">
+        <SearchBox />
+      </div>
       {status ? (
         <>
-          <div className="flex w-[60%] items-center justify-evenly">
+          <div className="flex items-center justify-evenly">
             {data.map((menuItem, index) => {
               return (
                 <div
@@ -66,8 +69,8 @@ const Navbar: FC<INavbar> = ({ isChangeBackgroundHeader }) => {
                 </div>
               );
             })}
-            <SearchBox />
           </div>
+
           <div className="flex w-20 justify-between">
             <LangsComboBox />
             <UserAvatar

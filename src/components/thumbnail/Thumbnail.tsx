@@ -8,6 +8,7 @@ import {
   triggerPlayASingleSong,
   triggerEndASingleSong,
 } from "../../features/currentSongActiveSlice";
+import { triggerReadySatate } from "../../features/isPlayingFlagSlice";
 interface ThumbnailProps {
   alt: string;
   size: number;
@@ -18,6 +19,7 @@ interface ThumbnailProps {
 
 const Thumbnail: FC<ThumbnailProps> = ({ alt, size, src, onClick, songId }) => {
   const { activeSongId } = useSelector((state: RootState) => state.activeSong);
+  const { ready } = useSelector((state: RootState) => state.ready);
   const [isPlayingItSelf, setIsPlayingItSelf] = useState<boolean>(false);
   const dispatch = useDispatch();
 
@@ -25,6 +27,7 @@ const Thumbnail: FC<ThumbnailProps> = ({ alt, size, src, onClick, songId }) => {
     activeSongId === songId
       ? setIsPlayingItSelf(true)
       : setIsPlayingItSelf(false);
+    dispatch(triggerReadySatate(false));
   }, [activeSongId]);
 
   return (
@@ -37,14 +40,18 @@ const Thumbnail: FC<ThumbnailProps> = ({ alt, size, src, onClick, songId }) => {
         shape="square"
       />
       {isPlayingItSelf ? (
-        <IsPlaying
-          onClick={() => {
-            dispatch(triggerEndASingleSong());
-            setIsPlayingItSelf(false);
-          }}
-          height={size / 2}
-          width={size / 2}
-        />
+        ready ? (
+          <IsPlaying
+            onClick={() => {
+              // dispatch(triggerEndASingleSong());
+              setIsPlayingItSelf(false);
+            }}
+            height={size / 2}
+            width={size / 2}
+          />
+        ) : (
+          <h1>...</h1>
+        )
       ) : (
         <PlayIcon
           onClick={() => {
