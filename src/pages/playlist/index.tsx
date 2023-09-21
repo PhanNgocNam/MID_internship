@@ -2,13 +2,13 @@ import { useEffect, FC, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { get } from "../../utils/request";
 import apiInstance from "../../configs/api";
-import { Skeleton } from "antd";
 import Suffle from "../../assets/icons/Suffle";
 import SingleSong from "../../components/single_song/SingleSong";
 import { motion } from "framer-motion";
 import { useGetPlaylistInfoByIdQuery } from "../../features/apiSlice";
 import { useDispatch } from "react-redux";
 import { handlePreProcessingPlaylistInfoData } from "../../utils/handlePreProcessingPlaylistInfoData";
+import Skeleton from "../../components/skeleton/Skeleton";
 
 export interface ISong {
   artistsNames: string;
@@ -70,10 +70,10 @@ const Playlist: FC = () => {
   }, [playListInfo]);
 
   return (
-    <div className="bg-black h-[100vh] px-2 text-white/80 overflow-hidden md:p-10 lg:p-16">
+    <div className="bg-black h-[100dvh] p-2 text-white/80 overflow-hidden">
       {playlist ? (
         <>
-          <div className="mt-[64px] h-fit py-3  flex justify-between items-center md:justify-start md:mt-6">
+          <div className="h-fit pt-[60px] flex justify-between items-center md:justify-start">
             <img
               src={playlist.thumbnailM}
               className="h-[160px] rounded-md md:h-60"
@@ -131,11 +131,24 @@ const Playlist: FC = () => {
           </div>
         </>
       ) : (
-        <div className="h-full overflow-hidden">
-          <Skeleton className="bg-slate-200/30  py-16" active />
-          <Skeleton className="bg-slate-200/30  py-16" active />
-          <Skeleton className="bg-slate-200/30  py-16" active />
-          <Skeleton className="bg-slate-200/30  py-16" active />
+        <div className="h-full pt-[60px]">
+          <div className="h-[240px] flex">
+            <Skeleton height={240} width={240} unit="px" />
+            <div className="flex-1 flex flex-col justify-evenly px-4">
+              <Skeleton height={16} width={40} unit="%" />
+              <Skeleton height={16} width={40} unit="%" />
+              <Skeleton height={16} width={40} unit="%" />
+              <Skeleton height={16} width={40} unit="%" />
+            </div>
+          </div>
+          <div className="h-[70%] flex justify-evenly flex-col">
+            <Skeleton height={16} width={100} unit="%" />
+            <Skeleton height={16} width={100} unit="%" />
+            <Skeleton height={16} width={100} unit="%" />
+            <Skeleton height={16} width={100} unit="%" />
+            <Skeleton height={16} width={100} unit="%" />
+            <Skeleton height={16} width={100} unit="%" />
+          </div>
         </div>
       )}
     </div>
