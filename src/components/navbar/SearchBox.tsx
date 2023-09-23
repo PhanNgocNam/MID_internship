@@ -20,6 +20,7 @@ import { navigateToWatch } from "../../utils/navigateToWatchRoute";
 import { createSearchParams, useSearchParams } from "react-router-dom";
 import { handlePreProcessingPlaylistInfoData } from "../../utils/handlePreProcessingPlaylistInfoData";
 import Skeleton from "../skeleton/Skeleton";
+import SearchIcon from "../../assets/icons/Search";
 
 type SearchProps = {};
 
@@ -87,7 +88,7 @@ const SearchBox: FC<SearchProps> = ({}) => {
           />
           <input
             className="w-full bg-transparent p-2 outline-none"
-            placeholder="Find your song..."
+            placeholder="Tìm kiếm bài hát..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             onKeyDown={(e) => {
@@ -96,6 +97,11 @@ const SearchBox: FC<SearchProps> = ({}) => {
               }
             }}
           />
+          {searchInput ? (
+            ""
+          ) : (
+            <SearchIcon height={16} width={16} color="rgba(255,255, 255, .7)" />
+          )}
           {searchInput ? (
             <div className="w-full h-fit absolute top-[36px] left-0 bottom-0 bg-black rounded-sm">
               {searchData ? (

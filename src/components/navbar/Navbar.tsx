@@ -49,9 +49,11 @@ const Navbar: FC<INavbar> = ({ isChangeBackgroundHeader }) => {
       {size >= 768 ? (
         <img alt="" src={DesktopLogo} />
       ) : (
-        <Logo alt="Logo" src={logo_on_phone} size={26} shape="circle" />
+        <>
+          <Logo alt="Logo" src={logo_on_phone} size={26} shape="circle" />
+        </>
       )}
-      <div className="w-10 md:w-[60%] flex justify-end">
+      <div className="w-10 md:pl-[76px] md:w-[60%] flex justify-end md:justify-start items-center">
         <SearchBox />
       </div>
       {status ? (

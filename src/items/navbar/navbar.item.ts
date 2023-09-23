@@ -8,16 +8,16 @@ export const data = [
   {
     icon: HomeOutlined,
     path: "/",
-    label: "Home",
+    label: "Trang chủ",
   },
   {
     icon: CompassOutlined,
     path: "/explore",
-    label: "Explore",
+    label: "Khám phá",
   },
   {
     icon: PlaySquareOutlined,
     path: "/upgrade",
-    label: "Upgrade",
+    label: "Thư viện",
   },
 ];
