@@ -16,6 +16,7 @@ const DefaultLayout: FC<IProps> = ({ children }) => {
     useState<boolean>(false);
 
   window.addEventListener("scroll", handleChangeBg);
+
   useEffect(() => {
     window.addEventListener("resize", () =>
       dispatch(resizeWindow(window.innerWidth))
@@ -32,7 +33,6 @@ const DefaultLayout: FC<IProps> = ({ children }) => {
 
   function handleChangeBg() {
     const { scrollY } = window;
-    if (!status) return;
     if (scrollY >= 10) {
       setIsChangeBackgroundHeader(true);
     } else {

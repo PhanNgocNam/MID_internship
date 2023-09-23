@@ -29,7 +29,13 @@ const SingleSong: FC<ISong> = (props) => {
           </div>
         </div>
         <p>
-          {Math.floor(props.duration / 60)}:{Math.floor(props.duration % 60)}
+          {Math.floor(props.duration / 60)
+            .toString()
+            .padStart(2, "0")}
+          :
+          {Math.floor(props.duration % 60)
+            .toString()
+            .padStart(2, "0")}
         </p>
       </div>
     </div>

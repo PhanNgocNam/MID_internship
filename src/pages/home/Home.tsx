@@ -39,7 +39,7 @@ const Home: FC = () => {
         </>
       ) : (
         <div className="min-h-[100px] flex items-center justify-center flex-col">
-          <div className="pt-6 px-2 md:w-full md:px-10 h-[160px] flex justify-between">
+          <div className="pt-6 px-2 w-full md:px-10 h-[100px] md:h-[160px] flex justify-between">
             <Skeleton height={100} width={32} unit="%" />
             <Skeleton height={100} width={32} unit="%" />
             <Skeleton height={100} width={32} unit="%" />

@@ -26,11 +26,13 @@ const items: MenuProps["items"] = [
   },
 ];
 
-type Props = {};
+type Props = {
+  className: string;
+};
 
-const LangsComboBox: FC = (props: Props) => {
+const LangsComboBox: FC<Props> = ({ className }) => {
   return (
-    <div className="flex items-center">
+    <div className={`flex items-center ${className}`}>
       <Dropdown menu={{ items }} placement="bottomRight">
         <button>
           <GlobeIcon width={20} height={20} />
