@@ -1,7 +1,7 @@
 .skeleton {
   opacity: 0.6;
   animation: skeleton-loading 1s linear infinite alternate;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 @keyframes skeleton-loading {

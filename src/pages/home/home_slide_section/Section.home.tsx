@@ -46,16 +46,22 @@ const Section: FC<SectionProps> = ({ title, items }) => {
           const params = { list: playlist.encodeId };
           return (
             <SplideSlide
-              className="cursor-pointer"
+              className="cursor-pointer z-50"
+              key={playlist.encodeId}
               onClick={() => {
                 navigate({
                   pathname: "/playlist",
                   search: `${createSearchParams(params)}`,
                 });
               }}
-              key={playlist.encodeId}
             >
               <img
+                onClick={() => {
+                  navigate({
+                    pathname: "/playlist",
+                    search: `${createSearchParams(params)}`,
+                  });
+                }}
                 className="p-2 rounded-[10px] overflow-hidden md:w-full"
                 src={playlist.thumbnail}
               />
