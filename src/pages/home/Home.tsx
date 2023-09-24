@@ -8,6 +8,7 @@ import { Spin } from "antd";
 import Section from "./home_slide_section/Section.home";
 import { useGetHomepageDateQuery } from "../../features/apiSlice";
 import Skeleton from "../../components/skeleton/Skeleton";
+import { motion } from "framer-motion";
 
 const Home: FC = () => {
   const [homeData, setHomeData] = useState<Array<any>>([]);
@@ -21,7 +22,13 @@ const Home: FC = () => {
   // console.log(homeData[1]);
 
   return (
-    <div className="bg-black h-fit min-h-[100dvh]">
+    <motion.div
+      initial={{ y: "100%" }}
+      animate={{ y: 0, x: 0 }}
+      // exit={{ y: "100%" }}
+      transition={{ duration: 1, ease: "linear" }}
+      className="bg-black h-fit min-h-[100dvh]"
+    >
       <Categories />
 
       {homeData.length ? (
@@ -66,7 +73,7 @@ const Home: FC = () => {
           </div>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

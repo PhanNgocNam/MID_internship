@@ -78,30 +78,28 @@ const Watch: FC = () => {
   return (
     <motion.div
       initial={{ y: "100%" }}
-      animate={{ y: 0 }}
-      exit={{ y: "100%", opacity: 0 }}
-      transition={{ duration: 0.5 }}
-      className="h-[100vh]  overflow-hidden bg-black  p-2 md:flex md:justify-center md:items-center "
+      animate={{ y: 0, x: 0 }}
+      // exit={{ y: "100%" }}
+      transition={{ delay: 0.5, duration: 0.5, ease: "linear" }}
     >
-      <motion.div
-        initial={{ opacity: 0, x: "60%", y: "60%", scale: 0.6 }}
-        animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        style={{ backgroundImage: `url(${song?.data?.data?.thumbnailM})` }}
-        className="relative bg-cover rounded-sm  flex items-center justify-center  md:max-h-[60vh] md:h-[60vh] md:mr-10 md:w-[50%] mt-[64px]"
-      >
-        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black/80" />
-        <motion.img
-          animate={{ rotate: 360 }}
-          transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-          className="rounded-full border-2 p-2 border-gray-600/50 border-solid z-10"
-          src={song?.data?.data?.thumbnailM}
-          alt={""}
-        />
-      </motion.div>
-      <div className="md:w-1/3 md:h-[70vh]">
-        <Tabs defaultActiveKey="1" items={items} centered />
+      <div className="bg-gradient-to-b from-pink-500/50 via-black-500/40 to-black h-[20dvh] relative z-10"></div>
+      <div className="h-[80dvh] overflow-hidden bg-black p-2 md:flex md:justify-between md:items-center px-10">
+        <div
+          style={{ backgroundImage: `url(${song?.data?.data?.thumbnailM})` }}
+          className="relative bg-cover rounded-sm  flex items-center justify-center  md:max-h-[60vh] md:h-[60vh] md:w-[50%]"
+        >
+          <div className="fixed top-0 left-0 right-0 bottom-0 bg-black/80" />
+          <motion.img
+            animate={{ rotate: 360 }}
+            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+            className="rounded-full border-2 p-2 border-gray-600/50 border-solid z-10"
+            src={song?.data?.data?.thumbnailM}
+            alt={""}
+          />
+        </div>
+        <div className="md:w-1/3 md:h-[70vh]">
+          <Tabs defaultActiveKey="1" items={items} centered />
+        </div>
       </div>
     </motion.div>
   );
