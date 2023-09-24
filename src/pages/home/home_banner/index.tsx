@@ -40,7 +40,7 @@ const HomeBanner: FC<HomeBannerProps> = ({ items }) => {
         {items.map((slideItem, index) => {
           const params = { list: slideItem.encodeId };
           return (
-            <SplideSlide key={index} className="p-3 md:max-w-[30%]">
+            <SplideSlide key={index} className="md:max-w-[30%] flex">
               <img
                 onClick={() => {
                   navigateToWatch({
@@ -51,6 +51,7 @@ const HomeBanner: FC<HomeBannerProps> = ({ items }) => {
                 className="overflow-hidden rounded-md md:max-w-[100%]  cursor-pointer"
                 src={slideItem.banner}
               />
+              <div className="px-1 w-1" />
             </SplideSlide>
           );
         })}
