@@ -78,8 +78,8 @@ const Watch: FC = () => {
   return (
     <motion.div
       initial={{ y: "100%" }}
-      animate={{ y: 0, x: 0 }}
-      // exit={{ y: "100%" }}
+      animate={{ y: 0, x: 0, opacity: 1 }}
+      exit={{ opacity: 0 }}
       transition={{ delay: 0.5, duration: 0.5, ease: "linear" }}
     >
       <div className="bg-gradient-to-b from-pink-500/50 via-black-500/40 to-black h-[20dvh] relative z-10"></div>

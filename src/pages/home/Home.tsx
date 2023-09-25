@@ -24,9 +24,9 @@ const Home: FC = () => {
   return (
     <motion.div
       initial={{ y: "100%" }}
-      animate={{ y: 0, x: 0 }}
-      // exit={{ y: "100%" }}
-      transition={{ duration: 1, ease: "linear" }}
+      animate={{ y: 0, x: 0, opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ delay: 0.5, duration: 0.5, ease: "linear" }}
       className="bg-black h-fit min-h-[100dvh]"
     >
       <Categories />
