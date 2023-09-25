@@ -77,10 +77,10 @@ const Playlist: FC = () => {
       transition={{ delay: 0.5, duration: 0.5, ease: "linear" }}
     >
       <div className="bg-gradient-to-b from-pink-500/50 via-black-500/40 to-black h-[20dvh]"></div>
-      <div className="bg-black h-[100dvh] p-2 md:pl-10 text-white/80 overflow-hidden">
+      <div className="bg-black h-[100dvh] p-2 md:px-10 text-white/80 overflow-hidden">
         {playlist ? (
           <>
-            <div className="h-fit flex justify-between items-center md:justify-start">
+            <div className="h-fit flex justify-between items-center md:justify-start md:p-2">
               <img
                 src={playlist.thumbnailM}
                 className="h-[160px] rounded-md md:h-60"

@@ -81,7 +81,7 @@ const SearchBox: FC<SearchProps> = ({}) => {
   return (
     <>
       {value ? (
-        <div className="w-[80%] bg-stone-600 fixed left-1/2 -translate-x-1/2 top-[65px] flex items-center px-2 border border-solid border-slate-200 rounded-md md:relative md:top-0 md:border-white/20 md:bg-stone-600/50  md:max-w-[60%]">
+        <div className="md:w-[46%] md:ml-10 fixed w-[80%] top-16 bg-stone-600 flex items-center px-2 border border-solid border-slate-200 rounded-md md:relative md:top-0 md:border-white/20 md:bg-stone-600/50  md:max-w-[60%]">
           <ArrowLeftOutlined
             className="md:hidden"
             onClick={() => toggleValue(false)}
