@@ -83,7 +83,7 @@ const Watch: FC = () => {
       transition={{ delay: 0.5, duration: 0.5, ease: "linear" }}
     >
       <div className="bg-gradient-to-b from-pink-500/50 via-black-500/40 to-black h-[20dvh] relative z-10"></div>
-      <div className="h-[80dvh] overflow-hidden bg-black p-2 md:flex md:justify-between md:items-center px-10">
+      <div className="h-[80dvh] overflow-hidden bg-black p-2 md:flex md:justify-between md:items-center md:px-10">
         <div
           style={{ backgroundImage: `url(${song?.data?.data?.thumbnailM})` }}
           className="relative bg-cover rounded-sm  flex items-center justify-center  md:max-h-[60vh] md:h-[60vh] md:w-[50%]"
