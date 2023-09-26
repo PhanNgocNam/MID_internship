@@ -41,7 +41,7 @@ const NewRelease: FC<INewRelease> = ({ items, title }) => {
   }, [switchData]);
 
   return (
-    <div className="new_release p-2 text-white/80 overflow-auto border-solid border border-white/10 md:px-10 md:border-0 h-fit">
+    <div className="new_release p-2 text-white/80 overflow-auto md:px-10 h-fit ">
       <h3 className="py-2 text-xl md:text-2xl">{title}</h3>
       <div className="flex justify-between items-center">
         <div className="w-[85%] py-2 flex">
@@ -71,7 +71,7 @@ const NewRelease: FC<INewRelease> = ({ items, title }) => {
               key={song.encodeId}
               className={`flex justify-between items-center py-2 ${clsx({
                 ["bg-gray-50/10"]: activeSongId.activeSongId === song.encodeId,
-              })} px-2 border border-solid border-white/10 rounded-s`}
+              })} px-2 border border-solid border-white/10 rounded-md`}
             >
               <Thumbnail
                 songId={song.encodeId}

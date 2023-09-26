@@ -22,6 +22,7 @@ import {
 } from "react-icons/bi";
 import { triggerPlayASingleSong } from "../../features/currentSongActiveSlice";
 import { triggerShufferingMode } from "../../features/isShuffering";
+import { triggerPause, triggerPlay } from "../../features/isSongPlayingSlice";
 
 const Player: FC = () => {
   const navigate = useNavigate();
@@ -41,11 +42,15 @@ const Player: FC = () => {
   const { isShuffringMode } = useSelector(
     (state: RootState) => state.shufferingMode
   );
+  const { isSongPlaying } = useSelector(
+    (state: RootState) => state.isSongPlaying
+  );
   const [isPlaying, setIsPlaying] = useState<boolean>(
-    activeSongId ? true : false
+    isSongPlaying ? true : false
   );
 
   const { data } = useGetCurrentSongByIdQuery(activeSongId);
+
   useEffect(() => {
     if (data) {
       setCurrentSongURL(data?.data?.data?.[128]);
@@ -55,6 +60,10 @@ const Player: FC = () => {
   useEffect(() => {
     setLoading(true);
   }, [activeSongId]);
+
+  useEffect(() => {
+    setIsPlaying(isSongPlaying);
+  }, [isSongPlaying]);
 
   const handleNextSong = () => {
     const index: number = playlistIsActive.findIndex(
@@ -164,14 +173,20 @@ const Player: FC = () => {
                 height={30}
                 width={30}
                 color="balck"
-                onClick={() => setIsPlaying(false)}
+                onClick={() => {
+                  dispatch(triggerPause());
+                  setIsPlaying(false);
+                }}
               />
             ) : (
               <PlayIcon
                 height={30}
                 width={30}
                 color="black"
-                onClick={() => setIsPlaying(true)}
+                onClick={() => {
+                  dispatch(triggerPlay());
+                  setIsPlaying(true);
+                }}
               />
             )}
           </>

@@ -7,6 +7,7 @@ import { apiSlice } from "../features/apiSlice";
 import isShuffringMode from "../features/isShuffering";
 import windowSizeSlice from "../features/windowSizeSlice";
 import isPlayingFlagSlice from "../features/isPlayingFlagSlice";
+import isSongPlayingSlice from "../features/isSongPlayingSlice";
 
 const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ const store = configureStore({
     shufferingMode: isShuffringMode.reducer,
     size: windowSizeSlice.reducer,
     ready: isPlayingFlagSlice.reducer,
+    isSongPlaying: isSongPlayingSlice.reducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
