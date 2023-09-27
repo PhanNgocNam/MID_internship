@@ -24,10 +24,6 @@ const SingleSong: FC<ISong> = (props) => {
         key={props.encodeId}
       >
         <div className="flex items-center relative">
-          {/* <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <Volume height={16} width={16} color="white" />
-          </div> */}
-          {/* <img className="h-10 rounded-sm pr-2 md:h-8" src={props.thumbnail} /> */}
           <Thumbnail
             songId={props.encodeId}
             alt={props.title}
