@@ -46,6 +46,10 @@ const Player: FC = () => {
   const { isSongPlaying } = useSelector(
     (state: RootState) => state.isSongPlaying
   );
+
+  const { currentPlaylistID } = useSelector(
+    (state: RootState) => state.currentPlaylistID
+  );
   const [isPlaying, setIsPlaying] = useState<boolean>(
     isSongPlaying ? true : false
   );
@@ -77,7 +81,11 @@ const Player: FC = () => {
     if (index + 1 >= playlistIsActive.length) {
       navigate({
         pathname: "/watch",
-        search: `?v=${playlistIsActive[0]}&list=${searchParams.get("list")}`,
+        search: `?v=${playlistIsActive[0]}&list=${
+          searchParams.get("list")
+            ? searchParams.get("list")
+            : currentPlaylistID
+        }`,
       });
       dispatch(
         triggerPlayASingleSong({
@@ -87,9 +95,11 @@ const Player: FC = () => {
     } else {
       navigate({
         pathname: "/watch",
-        search: `?v=${playlistIsActive[index + 1]}&list=${searchParams.get(
-          "list"
-        )}`,
+        search: `?v=${playlistIsActive[index + 1]}&list=${
+          searchParams.get("list")
+            ? searchParams.get("list")
+            : currentPlaylistID
+        }`,
       });
       dispatch(
         triggerPlayASingleSong({
@@ -244,25 +254,21 @@ const Player: FC = () => {
       <div className="flex items-center">
         {searchParams.get("v") ? (
           <button
-            className="px-2"
+            className="px-2 cursor-pointer"
             onClick={() => {
-              if (!searchParams.get("list")) return navigate(-1);
-              navigate({
-                pathname: "/playlist",
-                search: `?list=${searchParams.get("list")}`,
-              });
+              navigate(-1);
             }}
           >
             <DownIcon width={16} height={16} color="black" />
           </button>
         ) : (
           <button
-            className="px-2"
+            className="px-2 cursor-pointer"
             onClick={() => {
               if (!searchParams.get("list"))
                 return navigate({
                   pathname: "/watch",
-                  search: `?v=${activeSongId}`,
+                  search: `?v=${activeSongId}&list=${currentPlaylistID}`,
                 });
               navigate({
                 pathname: "/watch",

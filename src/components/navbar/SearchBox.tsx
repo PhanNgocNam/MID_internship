@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { FC, KeyboardEventHandler, useEffect, useRef, useState } from "react";
 import { RootState } from "../../configs/store";
 import {
@@ -21,6 +21,7 @@ import { createSearchParams, useSearchParams } from "react-router-dom";
 import { handlePreProcessingPlaylistInfoData } from "../../utils/handlePreProcessingPlaylistInfoData";
 import Skeleton from "../skeleton/Skeleton";
 import SearchIcon from "../../assets/icons/Search";
+import { saveCurrentPlaylistID } from "../../features/current_playlist_ID.slice";
 
 type SearchProps = {};
 
@@ -38,6 +39,7 @@ const SearchBox: FC<SearchProps> = ({}) => {
   const [searchInput, setSearchInput] = useState<string>("");
   const searchFocusRef = useRef<HTMLDivElement | null>(null);
   const [focusFlag, setFocusFlag] = useState<number>(0);
+  const dispatch = useDispatch();
 
   const [searchData, setSearchData] = useState<any>({});
   useDebounce(
@@ -50,8 +52,6 @@ const SearchBox: FC<SearchProps> = ({}) => {
     1000,
     searchInput
   );
-
-  // console.log(searchData);
 
   const { size } = useSelector((state: RootState) => state.size);
   useEffect(() => {
@@ -123,6 +123,11 @@ const SearchBox: FC<SearchProps> = ({}) => {
                         });
                         const playlistData = await get(
                           `${apiInstance.PLAYLIST_INFO_API}?id=${searchData?.playlists[0]?.encodeId}`
+                        );
+                        dispatch(
+                          saveCurrentPlaylistID(
+                            searchData?.playlists[0]?.encodeId
+                          )
                         );
                         handlePreProcessingPlaylistInfoData(
                           playlistData?.data?.data

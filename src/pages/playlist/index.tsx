@@ -9,6 +9,7 @@ import { useGetPlaylistInfoByIdQuery } from "../../features/apiSlice";
 import { useDispatch } from "react-redux";
 import { handlePreProcessingPlaylistInfoData } from "../../utils/handlePreProcessingPlaylistInfoData";
 import Skeleton from "../../components/skeleton/Skeleton";
+import { saveCurrentPlaylistID } from "../../features/current_playlist_ID.slice";
 
 interface IArtist {
   name?: string;
@@ -47,6 +48,7 @@ export type playlistType = {
 
 const Playlist: FC = () => {
   const [searchParams] = useSearchParams();
+  const dispatch = useDispatch();
 
   const [playlist, setPlaylist] = useState<playlistType>({
     encodeId: "",
@@ -70,6 +72,7 @@ const Playlist: FC = () => {
   useEffect(() => {
     if (playlist) {
       handlePreProcessingPlaylistInfoData(playlist);
+      dispatch(saveCurrentPlaylistID(searchParams.get("list")));
     }
   }, [searchParams.get("list"), playlist]);
 
