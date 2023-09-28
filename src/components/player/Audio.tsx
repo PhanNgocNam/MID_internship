@@ -25,7 +25,9 @@ const Audio = React.forwardRef<any, AudioProps>((props, forwardRef) => {
       url={`${props.currentSongURL}`}
       config={{ file: { forceAudio: true } }}
       playing={props.isPlaying}
-      onEnded={() => props.handleNextSong()}
+      onEnded={() => {
+        props.handleNextSong();
+      }}
       loop={props.loop}
       volume={props.volume}
       // onPause={() => dispatch(triggerReadySatate(false))}
@@ -35,7 +37,6 @@ const Audio = React.forwardRef<any, AudioProps>((props, forwardRef) => {
       onReady={(e) => {
         props.setLoading(false);
         dispatch(triggerReadySatate(true));
-        console.log(e);
       }}
       onProgress={(e) => {
         dispatch(dispatchCurrenttime(e.playedSeconds * 1000));

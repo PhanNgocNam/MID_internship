@@ -10,6 +10,7 @@ import {
 } from "../../features/currentSongActiveSlice";
 import { triggerReadySatate } from "../../features/isPlayingFlagSlice";
 import { triggerPause, triggerPlay } from "../../features/isSongPlayingSlice";
+import { CgSpinner } from "react-icons/cg";
 interface ThumbnailProps {
   alt: string;
   size: number;
@@ -44,14 +45,20 @@ const Thumbnail: FC<ThumbnailProps> = ({ alt, size, src, onClick, songId }) => {
       />
       {isPlayingItSelf ? (
         isSongPlaying ? (
-          <IsPlaying
-            onClick={() => {
-              setIsPlayingItSelf(false);
-              dispatch(triggerPause());
-            }}
-            height={size / 2}
-            width={size / 2}
-          />
+          ready ? (
+            <IsPlaying
+              onClick={() => {
+                setIsPlayingItSelf(false);
+                dispatch(triggerPause());
+              }}
+              height={size / 2}
+              width={size / 2}
+            />
+          ) : (
+            <div className=" absolute top-1/2 left-1/2 -translate-x-[50%] -translate-y-[50%]">
+              <CgSpinner size={30} className="animate-spin" />
+            </div>
+          )
         ) : (
           <PlayIcon
             height={size / 2}
@@ -59,6 +66,7 @@ const Thumbnail: FC<ThumbnailProps> = ({ alt, size, src, onClick, songId }) => {
             color="white"
             onClick={() => {
               setIsPlayingItSelf(true);
+              dispatch(triggerReadySatate(false));
               dispatch(triggerPlay());
               dispatch(triggerPlayASingleSong({ activeSongId: songId }));
             }}
@@ -67,6 +75,7 @@ const Thumbnail: FC<ThumbnailProps> = ({ alt, size, src, onClick, songId }) => {
       ) : (
         <PlayIcon
           onClick={() => {
+            dispatch(triggerReadySatate(false));
             setIsPlayingItSelf(true);
             dispatch(triggerPlay());
             dispatch(triggerPlayASingleSong({ activeSongId: songId }));

@@ -12,7 +12,7 @@ import { dispatchCurrenttime } from "../../features/currentTimeSlice";
 import { Slider } from "antd";
 import clsx from "clsx";
 import Audio from "./Audio";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { CgSpinner } from "react-icons/cg";
 import {
   BiSkipNext,
   BiSkipPrevious,
@@ -23,6 +23,7 @@ import {
 import { triggerPlayASingleSong } from "../../features/currentSongActiveSlice";
 import { triggerShufferingMode } from "../../features/isShuffering";
 import { triggerPause, triggerPlay } from "../../features/isSongPlayingSlice";
+import { triggerReadySatate } from "../../features/isPlayingFlagSlice";
 
 const Player: FC = () => {
   const navigate = useNavigate();
@@ -66,36 +67,42 @@ const Player: FC = () => {
   }, [isSongPlaying]);
 
   const handleNextSong = () => {
+    // check playlist array is empty
+    if (!playlistIsActive.length) return;
+    dispatch(triggerReadySatate(false));
     const index: number = playlistIsActive.findIndex(
       (song: string) => song === activeSongId
     );
-    index + 1
-      ? navigate({
-          pathname: "/watch",
-          search: `?v=${playlistIsActive[index + 1]}&list=${searchParams.get(
-            "list"
-          )}`,
+    if (!index && index !== 0) return;
+    if (index + 1 >= playlistIsActive.length) {
+      navigate({
+        pathname: "/watch",
+        search: `?v=${playlistIsActive[0]}&list=${searchParams.get("list")}`,
+      });
+      dispatch(
+        triggerPlayASingleSong({
+          activeSongId: playlistIsActive[0],
         })
-      : navigate({
-          pathname: "/watch",
-          search: `?v=${playlistIsActive[0]}&list=${searchParams.get("list")}`,
-        });
-    index + 1
-      ? dispatch(
-          triggerPlayASingleSong({
-            activeSongId: playlistIsActive[index + 1],
-          })
-        )
-      : dispatch(
-          triggerPlayASingleSong({
-            activeSongId: playlistIsActive[0],
-          })
-        );
+      );
+    } else {
+      navigate({
+        pathname: "/watch",
+        search: `?v=${playlistIsActive[index + 1]}&list=${searchParams.get(
+          "list"
+        )}`,
+      });
+      dispatch(
+        triggerPlayASingleSong({
+          activeSongId: playlistIsActive[index + 1],
+        })
+      );
+    }
   };
   const handlePrevSong = () => {
     const index: number = playlistIsActive.findIndex(
       (song: string) => song === activeSongId
     );
+    dispatch(triggerReadySatate(false));
     index - 1 &&
       navigate({
         pathname: "/watch",
@@ -165,7 +172,7 @@ const Player: FC = () => {
       <div className=" flex items-center justify-center">
         <BiSkipPrevious size={30} onClick={handlePrevSong} />
         {loading ? (
-          <AiOutlineLoading3Quarters className="animate-spin" />
+          <CgSpinner size={30} className="animate-spin" />
         ) : (
           <>
             {isPlaying ? (

@@ -3,20 +3,26 @@ import { ISong } from "../../pages/playlist";
 import { createSearchParams } from "react-router-dom";
 import { navigateToWatch } from "../../utils/navigateToWatchRoute";
 import { triggerPlayASong } from "../../utils/triggerPlayASong";
-import Volume from "../../assets/icons/Volume";
+import apiInstance from "../../configs/api";
 import Thumbnail from "../thumbnail/Thumbnail";
+import { handlePreProcessingPlaylistInfoData } from "../../utils/handlePreProcessingPlaylistInfoData";
+import { get } from "../../utils/request";
 
 const SingleSong: FC<ISong> = (props) => {
   const params = { v: props.encodeId, list: props.playlistId };
 
   return (
     <div
-      onClick={() => {
+      onClick={async () => {
         navigateToWatch({
           pathname: "/watch",
           search: `${createSearchParams(params)}`,
         });
         triggerPlayASong(props.encodeId);
+        const playlistData = await get(
+          `${apiInstance.PLAYLIST_INFO_API}?id=${props.playlistId}`
+        );
+        handlePreProcessingPlaylistInfoData(playlistData?.data?.data);
       }}
     >
       <div

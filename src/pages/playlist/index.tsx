@@ -10,6 +10,13 @@ import { useDispatch } from "react-redux";
 import { handlePreProcessingPlaylistInfoData } from "../../utils/handlePreProcessingPlaylistInfoData";
 import Skeleton from "../../components/skeleton/Skeleton";
 
+interface IArtist {
+  name?: string;
+  thumbnail?: string;
+  thumbnailM?: string;
+  playlistId: string;
+}
+
 export interface ISong {
   artistsNames: string;
   duration: number;
@@ -19,6 +26,7 @@ export interface ISong {
   thumbnail: string;
   thumbnailM: string;
   playlistId: string;
+  artists?: IArtist[];
 }
 
 export type playlistType = {

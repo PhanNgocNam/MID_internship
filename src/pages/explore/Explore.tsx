@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import CustomTooltip from "./custome_tooltip/CustomeToolTip";
 import SingleSong from "../../components/single_song/SingleSong";
+import { ISong } from "../playlist";
 
 type Props = {};
 
@@ -62,12 +63,9 @@ const Explore = (props: Props) => {
     <div className="h-[100dvh]">
       <div className="bg-gradient-to-b from-pink-500/50 via-black-500/40 to-black h-[20dvh]"></div>
       <div className="px-10">
-        <div className="text-white p-4">Xu Hướng</div>
+        <div className="text-white pb-3">Xu Hướng</div>
         <ResponsiveContainer width="100%" height={300}>
-          <LineChart
-            data={result}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-          >
+          <LineChart data={result} margin={{ top: 5, bottom: 5 }}>
             <CartesianGrid strokeDasharray="4 1 2" vertical={false} />
             <XAxis dataKey="hour" type="category" />
 
@@ -79,7 +77,29 @@ const Explore = (props: Props) => {
           </LineChart>
         </ResponsiveContainer>
       </div>
-      {/* {items.map((item) => <SingleSong title={item.}/>)} */}
+      <div className="px-10">
+        {items.slice(0, 10)?.map((song: ISong, index: number) => (
+          <div className="flex items-center">
+            <div className="text-white text-lg font-bold">{index + 1}</div>
+            <div className="flex-1">
+              <SingleSong
+                title={song.title}
+                artistsNames={song.artistsNames}
+                duration={song.duration}
+                encodeId={song.encodeId}
+                playlistId={
+                  song.artists?.length
+                    ? song.artists[0].playlistId
+                    : "non-playlist"
+                }
+                releaseDate={song.releaseDate}
+                thumbnail={song.thumbnail}
+                thumbnailM={song.thumbnailM}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
