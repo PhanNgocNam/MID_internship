@@ -114,7 +114,7 @@ const Player: FC = () => {
       (song: string) => song === activeSongId
     );
     dispatch(triggerReadySatate(false));
-    index - 1 &&
+    (index - 1 && location.pathname === "/watch") &&
       navigate({
         pathname: "/watch",
         search: `?v=${playlistIsActive[index - 1]}&list=${searchParams.get(
