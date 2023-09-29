@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { ISong } from "../../pages/playlist";
 import { createSearchParams } from "react-router-dom";
 import { navigateToWatch } from "../../utils/navigateToWatchRoute";
@@ -7,8 +7,12 @@ import apiInstance from "../../configs/api";
 import Thumbnail from "../thumbnail/Thumbnail";
 import { handlePreProcessingPlaylistInfoData } from "../../utils/handlePreProcessingPlaylistInfoData";
 import { get } from "../../utils/request";
+import { useDispatch } from "react-redux";
+import { saveCurrentPlaylistID } from "../../features/current_playlist_ID.slice";
 
 const SingleSong: FC<ISong> = (props) => {
+  const dispatch = useDispatch();
+
   const params = { v: props.encodeId, list: props.playlistId };
 
   return (
@@ -22,6 +26,7 @@ const SingleSong: FC<ISong> = (props) => {
         const playlistData = await get(
           `${apiInstance.PLAYLIST_INFO_API}?id=${props.playlistId}`
         );
+        dispatch(saveCurrentPlaylistID(props.playlistId));
         handlePreProcessingPlaylistInfoData(playlistData?.data?.data);
       }}
     >

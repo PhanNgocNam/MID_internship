@@ -27,7 +27,7 @@ const Watch: FC = () => {
   const items: TabsProps["items"] = [
     {
       key: "1",
-      label: `UP NEXT`,
+      label: `DANH SÁCH PHÁT`,
       children: (
         <div className="overflow-y-scroll h-[60vh] overflow-x-hidden md:h-[70vh] upnext_container">
           {playLists?.map((item: ISong) => {
@@ -60,7 +60,7 @@ const Watch: FC = () => {
     },
     {
       key: "2",
-      label: `LYRICS`,
+      label: `LỜI BÀI HÁT`,
       children: (
         <div className="text-white relative overflow-hidden md:h-fit">
           <Lyric />
