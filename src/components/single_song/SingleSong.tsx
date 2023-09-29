@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react";
 import { ISong } from "../../pages/playlist";
-import { createSearchParams } from "react-router-dom";
+import { createSearchParams, useLocation } from "react-router-dom";
 import { navigateToWatch } from "../../utils/navigateToWatchRoute";
 import { triggerPlayASong } from "../../utils/triggerPlayASong";
 import apiInstance from "../../configs/api";
@@ -12,16 +12,18 @@ import { saveCurrentPlaylistID } from "../../features/current_playlist_ID.slice"
 
 const SingleSong: FC<ISong> = (props) => {
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const params = { v: props.encodeId, list: props.playlistId };
 
   return (
     <div
       onClick={async () => {
-        navigateToWatch({
-          pathname: "/watch",
-          search: `${createSearchParams(params)}`,
-        });
+        location.pathname === "/watch" &&
+          navigateToWatch({
+            pathname: "/watch",
+            search: `${createSearchParams(params)}`,
+          });
         triggerPlayASong(props.encodeId);
         const playlistData = await get(
           `${apiInstance.PLAYLIST_INFO_API}?id=${props.playlistId}`

@@ -2,13 +2,11 @@ import { FC, useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useGetCurrentSongByIdQuery } from "../../features/apiSlice";
 import { RootState } from "../../configs/store";
-import { Spin } from "antd";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import PauseIcon from "../../assets/icons/PauseIcon";
 import PlayIcon from "../../assets/icons/PlayIcon";
 import UpIcon from "../../assets/icons/UpIcon";
 import DownIcon from "../../assets/icons/DownIcon";
-import { dispatchCurrenttime } from "../../features/currentTimeSlice";
 import { Slider } from "antd";
 import clsx from "clsx";
 import Audio from "./Audio";
@@ -28,6 +26,7 @@ import { triggerReadySatate } from "../../features/isPlayingFlagSlice";
 const Player: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const [searchParams] = useSearchParams();
   const [currentSongURL, setCurrentSongURL] = useState<string>("");
   const [percent, setPercent] = useState<number>(0);
@@ -79,28 +78,30 @@ const Player: FC = () => {
     );
     if (!index && index !== 0) return;
     if (index + 1 >= playlistIsActive.length) {
-      navigate({
-        pathname: "/watch",
-        search: `?v=${playlistIsActive[0]}&list=${
-          searchParams.get("list")
-            ? searchParams.get("list")
-            : currentPlaylistID
-        }`,
-      });
+      location.pathname === "/watch" &&
+        navigate({
+          pathname: "/watch",
+          search: `?v=${playlistIsActive[0]}&list=${
+            searchParams.get("list")
+              ? searchParams.get("list")
+              : currentPlaylistID
+          }`,
+        });
       dispatch(
         triggerPlayASingleSong({
           activeSongId: playlistIsActive[0],
         })
       );
     } else {
-      navigate({
-        pathname: "/watch",
-        search: `?v=${playlistIsActive[index + 1]}&list=${
-          searchParams.get("list")
-            ? searchParams.get("list")
-            : currentPlaylistID
-        }`,
-      });
+      location.pathname === "/watch" &&
+        navigate({
+          pathname: "/watch",
+          search: `?v=${playlistIsActive[index + 1]}&list=${
+            searchParams.get("list")
+              ? searchParams.get("list")
+              : currentPlaylistID
+          }`,
+        });
       dispatch(
         triggerPlayASingleSong({
           activeSongId: playlistIsActive[index + 1],
