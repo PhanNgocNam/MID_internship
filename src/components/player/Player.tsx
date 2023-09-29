@@ -257,7 +257,7 @@ const Player: FC = () => {
           <button
             className="px-2 cursor-pointer"
             onClick={() => {
-              navigate(-1);
+              navigate("/");
             }}
           >
             <DownIcon width={16} height={16} color="black" />

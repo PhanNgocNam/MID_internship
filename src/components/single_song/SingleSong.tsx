@@ -9,6 +9,7 @@ import { handlePreProcessingPlaylistInfoData } from "../../utils/handlePreProces
 import { get } from "../../utils/request";
 import { useDispatch } from "react-redux";
 import { saveCurrentPlaylistID } from "../../features/current_playlist_ID.slice";
+import { triggerReadySatate } from "../../features/isPlayingFlagSlice";
 
 const SingleSong: FC<ISong> = (props) => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const SingleSong: FC<ISong> = (props) => {
   return (
     <div
       onClick={async () => {
-        location.pathname === "/watch" &&
+        (location.pathname === "/watch" || location.pathname == "/playlist") &&
           navigateToWatch({
             pathname: "/watch",
             search: `${createSearchParams(params)}`,
@@ -29,6 +30,7 @@ const SingleSong: FC<ISong> = (props) => {
           `${apiInstance.PLAYLIST_INFO_API}?id=${props.playlistId}`
         );
         dispatch(saveCurrentPlaylistID(props.playlistId));
+        dispatch(triggerReadySatate(false));
         handlePreProcessingPlaylistInfoData(playlistData?.data?.data);
       }}
     >

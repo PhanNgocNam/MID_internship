@@ -32,7 +32,10 @@ const Watch: FC = () => {
         <div className="overflow-y-scroll h-[60vh] overflow-x-hidden md:h-[70vh] upnext_container">
           {playLists?.map((item: ISong) => {
             if (searchParams.get("v") === item.encodeId) {
-              activeRef.current?.scrollIntoView({ behavior: "smooth" });
+              activeRef.current?.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
             }
             return (
               <div
@@ -81,8 +84,9 @@ const Watch: FC = () => {
       animate={{ y: 0, x: 0, opacity: 1 }}
       // exit={{ opacity: 0 }}
       transition={{ delay: 0.5, duration: 0.5, ease: "linear" }}
+      className="overflow-y-auto"
     >
-      <div className="bg-gradient-to-b from-pink-500/50 via-black-500/40 to-black h-[20dvh] relative z-10"></div>
+      <div className="bg-gradient-to-b from-pink-500/50 via-black-500/40 to-black h-[20dvh] relative z-10 "></div>
       <div className="h-[80dvh] overflow-hidden bg-black p-2 md:flex md:justify-between md:items-center md:px-10">
         <div
           style={{ backgroundImage: `url(${song?.data?.data?.thumbnailM})` }}
