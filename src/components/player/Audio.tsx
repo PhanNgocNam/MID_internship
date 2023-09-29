@@ -30,7 +30,7 @@ const Audio = React.forwardRef<any, AudioProps>((props, forwardRef) => {
       }}
       loop={props.loop}
       volume={props.volume}
-      // onPause={() => dispatch(triggerReadySatate(false))}
+      // onPause={() => console.log("pause!")}
       onPlay={() => dispatch(triggerReadySatate(true))}
       // onStart={() => dispatch(triggerReadySatate(false))}
       // muted={true}

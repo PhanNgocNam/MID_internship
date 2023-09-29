@@ -7,30 +7,35 @@ import apiInstance from "../../configs/api";
 import Thumbnail from "../thumbnail/Thumbnail";
 import { handlePreProcessingPlaylistInfoData } from "../../utils/handlePreProcessingPlaylistInfoData";
 import { get } from "../../utils/request";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { saveCurrentPlaylistID } from "../../features/current_playlist_ID.slice";
 import { triggerReadySatate } from "../../features/isPlayingFlagSlice";
+import { RootState } from "../../configs/store";
+import { triggerPause, triggerPlay } from "../../features/isSongPlayingSlice";
 
 const SingleSong: FC<ISong> = (props) => {
   const dispatch = useDispatch();
   const location = useLocation();
+  const { ready } = useSelector((state: RootState) => state.ready);
+  const { isSongPlaying } = useSelector(
+    (state: RootState) => state.isSongPlaying
+  );
 
   const params = { v: props.encodeId, list: props.playlistId };
 
   return (
     <div
-      onClick={async () => {
+      onClick={async (e) => {
         (location.pathname === "/watch" || location.pathname == "/playlist") &&
           navigateToWatch({
             pathname: "/watch",
             search: `${createSearchParams(params)}`,
           });
-        triggerPlayASong(props.encodeId);
+        // triggerPlayASong(props.encodeId);
         const playlistData = await get(
           `${apiInstance.PLAYLIST_INFO_API}?id=${props.playlistId}`
         );
         dispatch(saveCurrentPlaylistID(props.playlistId));
-        dispatch(triggerReadySatate(false));
         handlePreProcessingPlaylistInfoData(playlistData?.data?.data);
       }}
     >
