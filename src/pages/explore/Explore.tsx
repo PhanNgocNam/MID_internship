@@ -66,7 +66,7 @@ const Explore = (props: Props) => {
   return (
     <div className="min-h-[100dvh] overflow-y-auto">
       <div className="bg-gradient-to-b from-pink-500/50 via-black-500/40 to-black h-[20dvh] "></div>
-      <div className="px-10 ">
+      <div className="px-2 md:px-10">
         <div className="text-white pb-3">Xu Hướng</div>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={result} margin={{ top: 5, bottom: 5 }}>
@@ -81,7 +81,7 @@ const Explore = (props: Props) => {
           </LineChart>
         </ResponsiveContainer>
       </div>
-      <div className="px-10">
+      <div className="px-2 md:px-10">
         {items.slice(0, 10)?.map((song: ISong, index: number) => (
           <div
             className={
