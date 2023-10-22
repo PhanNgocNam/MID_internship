@@ -39,11 +39,14 @@ export default function Lyric({}: Props) {
   );
 
   return (
-    <div className="h-[30vh] overflow-y-scroll md:h-[70vh] lyric_container">
-      <div className="h-fit">
+    <div className="h-[30vh] overflow-y-scroll md:h-[60dvh] lyric_container">
+      <div className="h-fit pt-10">
         {lyricData?.map((l: ILyric) => {
           if (time > l.startTime && time < l.endTime) {
-            lyricRef.current?.scrollIntoView({ behavior: "smooth" });
+            lyricRef.current?.scrollIntoView({
+              behavior: "smooth",
+              block: "center",
+            });
           }
           return (
             <p

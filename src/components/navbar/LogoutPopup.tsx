@@ -20,9 +20,9 @@ const LogoutPopup: FC = () => {
       </div>
       <div
         onClick={() => logoutService(dispatch)}
-        className="flex py-2 border-t border-solid"
+        className="flex py-2 border-t border-solid cursor-pointer"
       >
-        <ExportOutlined className="pr-4" /> Logout
+        <ExportOutlined className="pr-4" /> Đăng xuất
       </div>
     </div>
   );

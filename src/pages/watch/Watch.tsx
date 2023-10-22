@@ -29,7 +29,7 @@ const Watch: FC = () => {
       key: "1",
       label: `DANH SÁCH PHÁT`,
       children: (
-        <div className="overflow-y-scroll h-[60vh] overflow-x-hidden md:h-[70vh] upnext_container">
+        <div className="md:overflow-y-auto h-[60vh] pt-10 upnext_container">
           {playLists?.map((item: ISong) => {
             if (searchParams.get("v") === item.encodeId) {
               activeRef.current?.scrollIntoView({
@@ -65,7 +65,7 @@ const Watch: FC = () => {
       key: "2",
       label: `LỜI BÀI HÁT`,
       children: (
-        <div className="text-white relative overflow-hidden md:h-fit">
+        <div className="text-white relative overflow-hidden md:h-fit md:pl-2">
           <Lyric />
         </div>
       ),
@@ -90,19 +90,23 @@ const Watch: FC = () => {
       <div className="h-[80dvh] overflow-hidden bg-black p-2 md:flex md:justify-between md:items-center md:px-10">
         <div
           style={{ backgroundImage: `url(${song?.data?.data?.thumbnailM})` }}
-          className="relative bg-cover rounded-sm  flex items-center justify-center  md:max-h-[60vh] md:h-[60vh] md:w-[50%]"
+          className="relative bg-cover rounded-sm  flex items-center justify-center  md:max-h-[60vh] md:h-[60vh] md:w-[50%] border border-solid border-white/30"
         >
           <div className="fixed top-0 left-0 right-0 bottom-0 bg-black/80" />
           <motion.img
-            animate={{ rotate: 360 }}
-            transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-            className="rounded-full border-2 p-2 border-gray-600/50 border-solid z-10"
+            className="rounded-md border-2 p-2 border-gray-600/50 border-solid z-10 
+            "
             src={song?.data?.data?.thumbnailM}
-            alt={""}
+            alt={"img-thumb"}
           />
         </div>
-        <div className="md:w-1/3 md:h-[70vh]">
-          <Tabs defaultActiveKey="1" items={items} centered />
+        <div className="md:w-1/3 md:h-[60dvh] md:overflow-y-hidden border border-solid border-white/10 rounded-sm relative ">
+          <Tabs
+            className="absolute top-0 left-0 right-0 bottom-0"
+            defaultActiveKey="1"
+            items={items}
+            centered
+          />
         </div>
       </div>
     </motion.div>

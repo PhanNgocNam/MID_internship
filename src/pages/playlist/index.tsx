@@ -109,24 +109,24 @@ const Playlist: FC = () => {
                   {Math.floor(playlist.like / 1000)}k yêu thích
                 </p>
 
-                <div className="pt-3 hidden md:block">
+                {/* <div className="pt-3 hidden md:block">
                   <button className="p-2 border border-solid border-white/80 rounded-full mr-2">
                     Shuffer
                   </button>
                   <button className="p-2 border border-solid border-white/80 rounded-full">
                     Save to library
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
-            <div className="pb-2 md:hidden">
+            {/* <div className="pb-2 md:hidden">
               <button className="py-1 px-2 border border-solid border-white/80 rounded-full mr-2 text-sm">
                 Shuffer
               </button>
               <button className="py-1 px-2 border border-solid border-white/80 rounded-full text-sm">
                 Save to library
               </button>
-            </div>
+            </div> */}
             <div className="text-white/70 overflow-y-auto pb-40 h-[70%] none_scrollbar listsong_palaylist_container">
               {playlist.song.items.map((song) => (
                 <SingleSong

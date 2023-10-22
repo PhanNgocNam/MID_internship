@@ -94,7 +94,7 @@ const Navbar: FC<INavbar> = ({ isChangeBackgroundHeader }) => {
               style={{ color: "#fff" }}
               shape="round"
             >
-              Login
+              Đăng nhập
             </Button>
           )}
         </div>
